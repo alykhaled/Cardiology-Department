@@ -24,4 +24,4 @@ app.register_blueprint(equipmentBp,url_prefix='/equipment')
 app.register_blueprint(roomBp,url_prefix='/room')
 
 if __name__ == '__main__':
-    app.run()
+    app.run(debug=True)
