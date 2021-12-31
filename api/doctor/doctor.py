@@ -37,8 +37,25 @@ def viewOperations():
         'rec':myresult,
         'header':row_headers
     }
-    print(data)
     return render_template("doctorViewOperations.html",data=data)
+
+@doctorBp.route('/operations/add')
+def addOperations():
+    '''
+    This is the page that allows the doctor
+    to view and to add a new operation to the database
+    using there api
+    '''
+    mycursor.execute("SELECT * FROM operationsDB.Patients")
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    data = {
+        'message':"data retrieved",
+        'rec':myresult,
+        'header':row_headers
+    }
+    print(data)
+    return render_template("doctorAddOperation.html")
 
 @doctorBp.route('/patients')
 def viewPatients():
@@ -74,7 +91,6 @@ def addDoctor():
     that add a new doctor to the database
     '''
     return render_template("doctorView.html")
-
 
 @doctorBp.route('/get' ,methods=['GET'])
 def getDoctor():
