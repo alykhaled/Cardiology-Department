@@ -1,28 +1,101 @@
 from flask import Flask,Blueprint, redirect, url_for, request,render_template
+import mysql.connector
 
 # mycursor = mydb.cursor()
+mydb = mysql.connector.connect(
+    host='34.71.50.183',
+    user="root",
+    port=3306,
+    passwd="alykhaled123",
+    database="operationsDB"
+)
 doctorBp = Blueprint('doctorBp', __name__, template_folder='templates',static_folder='static')
+mycursor = mydb.cursor()
+@doctorBp.route('/')
+def doctorIndex():
+    '''
+    This is the index page for the doctor
+    that view some statics about latest
+    operations and patients that are
+    waiting for a doctor
+    '''
+
+    return render_template("doctorIndex.html")
+
+@doctorBp.route('/operations')
+def viewOperations():
+    '''
+    This is the page that allows the doctor
+    to view and to add a new operation to the database
+    using there api
+    '''
+    mycursor.execute("SELECT * FROM operationsDB.Patients")
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    data = {
+        'message':"data retrieved",
+        'rec':myresult,
+        'header':row_headers
+    }
+    print(data)
+    return render_template("doctorViewOperations.html",data=data)
+
+@doctorBp.route('/patients')
+def viewPatients():
+    '''
+    This is the page that allows the doctor
+    to view patients in a table
+    '''
+
+    return render_template("doctorView.html")
+
+@doctorBp.route('/nurses')
+def viewNurses():
+    '''
+    This is the page that allows the doctor
+    to view nurses in a table
+    '''
+
+    return render_template("doctorView.html")
+
+@doctorBp.route('/rooms')
+def viewRooms():
+    '''
+    This is the page that allows the doctor
+    to view rooms in a table
+    '''
+
+    return render_template("doctorView.html")
 
 @doctorBp.route('/add' ,methods=['POST'])
 def addDoctor():
-    #TODO
-    #     
-    return("Test")
+    '''
+    This is add POST request for the doctor
+    that add a new doctor to the database
+    '''
+    return render_template("doctorView.html")
+
 
 @doctorBp.route('/get' ,methods=['GET'])
 def getDoctor():
-    #TODO
-    #     
+    '''
+    This is add POST request for the doctor
+    that add a new doctor to the database
+    '''  
     return("Test")
 
-@doctorBp.route('/update' ,methods=['POST'])
+@doctorBp.route('/update' ,methods=['PUT'])
 def updateDoctor():
-    #TODO
-    #     
+    '''
+    This is update PUT request for the doctor
+    that update a doctor in the database
+    '''    
     return("Test")
 
 @doctorBp.route('/delete' ,methods=['POST'])
 def deleteDoctor():
-    #TODO
-    #     
+    '''
+    This is delete request for the doctor
+    that delete a doctor from the database
+    '''    
     return("Test")

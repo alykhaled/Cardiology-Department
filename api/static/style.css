@@ -11,6 +11,9 @@ ul {
 
 .main {
   height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
 }
 
 .myNavbar {
@@ -19,7 +22,7 @@ ul {
   -webkit-box-shadow: 0 0 10pt 1pt #D3D3D3;
   -moz-box-shadow: 0 0 10pt 1pt #D3D3D3;
   -webkit-appearance: none;
-  width: 200px;
+  width: 250px;
   float: left;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -51,10 +54,11 @@ ul {
   border-radius: 10px;
   color: black;
   width: 100%;
+  font-weight: bold;
 }
 
 .myNavItem span {
-  padding: 10px;
+  padding: 5px;
 }
 
 .myNavItem img {
@@ -69,6 +73,7 @@ ul {
 
 .mainContent {
   /* background-color: green; */
-  height: 100%;
+  float: right;
+  width: 100%;
 }
 /*# sourceMappingURL=style.css.map */
