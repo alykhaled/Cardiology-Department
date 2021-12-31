@@ -46,15 +46,8 @@ def addOperations():
     to view and to add a new operation to the database
     using there api
     '''
-    mycursor.execute("SELECT * FROM operationsDB.Patients")
-    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
-    myresult = mycursor.fetchall()
-    data = {
-        'message':"data retrieved",
-        'rec':myresult,
-        'header':row_headers
-    }
-    print(data)
+
+
     return render_template("doctorAddOperation.html")
 
 @doctorBp.route('/patients')
@@ -64,7 +57,15 @@ def viewPatients():
     to view patients in a table
     '''
 
-    return render_template("doctorView.html")
+    mycursor.execute("SELECT * FROM operationsDB.Patients")
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    data = {
+        'message':"data retrieved",
+        'rec':myresult,
+        'header':row_headers
+    }
+    return render_template("doctorViewPatients.html",data=data)
 
 @doctorBp.route('/nurses')
 def viewNurses():
@@ -73,7 +74,15 @@ def viewNurses():
     to view nurses in a table
     '''
 
-    return render_template("doctorView.html")
+    mycursor.execute("SELECT * FROM operationsDB.Patients")
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    data = {
+        'message':"data retrieved",
+        'rec':myresult,
+        'header':row_headers
+    }
+    return render_template("doctorViewNurses.html",data=data)
 
 @doctorBp.route('/rooms')
 def viewRooms():
@@ -82,7 +91,15 @@ def viewRooms():
     to view rooms in a table
     '''
 
-    return render_template("doctorView.html")
+    mycursor.execute("SELECT * FROM operationsDB.Patients")
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    data = {
+        'message':"data retrieved",
+        'rec':myresult,
+        'header':row_headers
+    }
+    return render_template("doctorViewRooms.html",data=data)
 
 @doctorBp.route('/add' ,methods=['POST'])
 def addDoctor():

@@ -22,7 +22,7 @@ ul {
   -webkit-box-shadow: 0 0 10pt 1pt #D3D3D3;
   -moz-box-shadow: 0 0 10pt 1pt #D3D3D3;
   -webkit-appearance: none;
-  width: 250px;
+  width: 300px;
   float: left;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -47,13 +47,18 @@ ul {
   width: fit-content;
 }
 
+.myNavbar ul {
+  width: 100%;
+  margin-top: 20px;
+}
+
 .myNavItem {
   cursor: pointer;
   padding: 10px;
   margin-top: 5px;
   border-radius: 10px;
   color: black;
-  width: 100%;
+  margin: 0px 15px;
   font-weight: bold;
 }
 
@@ -65,9 +70,19 @@ ul {
   width: 25px;
 }
 
+.myNavItem a {
+  text-decoration: none;
+  color: black;
+}
+
 .myNavItem.selected {
-  background-image: -webkit-gradient(linear, left top, right top, from(#334D66), to(#131626));
-  background-image: linear-gradient(to right, #334D66, #131626);
+  background-image: -webkit-gradient(linear, left top, right top, from(#43617e), to(#131626));
+  background-image: linear-gradient(to right, #43617e, #131626);
+  color: white;
+}
+
+.myNavItem.selected a {
+  text-decoration: none;
   color: white;
 }
 
