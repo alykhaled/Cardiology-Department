@@ -1,0 +1,27 @@
+{% extends "index.html" %}
+{% block head %}
+    <h3>Add Operation</h3>
+    <form>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="opName">Operation Name</label>
+            <input type="text" class="form-control" id="opName" placeholder="Operation Name">
+          </div>
+          <div class="form-group col-md-6">
+            <label for="patientId">Patient ID</label>
+            <input type="text" class="form-control" id="patientId" placeholder="Patient ID">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="roomId">Room ID</label>
+          <input type="text" class="form-control" id="roomId" placeholder="Room ID">
+        </div>
+        <div class="form-group">
+          <label for="dateAndTime">Date and Time</label>
+          <input type="datetime-local" class="form-control" id="dateAndTime">
+        </div>
+        <button type="submit" class="btn btn-primary">Add Operation</button>
+      </form>
+
+
+{% endblock %}

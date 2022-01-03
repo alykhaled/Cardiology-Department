@@ -16,6 +16,13 @@ ul {
   display: flex;
 }
 
+.grid-container {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: auto auto auto auto;
+      grid-template-columns: auto auto auto auto;
+}
+
 .myNavbar {
   height: 100%;
   box-shadow: 0 0 10pt 1pt #D3D3D3;
@@ -42,9 +49,6 @@ ul {
 
 .myNavbar .profile {
   margin-top: auto;
-  width: -webkit-fit-content;
-  width: -moz-fit-content;
-  width: fit-content;
 }
 
 .myNavbar ul {

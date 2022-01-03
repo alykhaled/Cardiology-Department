@@ -1,0 +1,33 @@
+{% extends "index.html" %}
+{% block head %}
+    <h3>View Operations</h3>
+    <div class="row">
+      <h5 class="align-self-center col" >Total of {{data.rec|count}} operations</h5>
+      <div class="text-right p-4 col">
+        <a href="http://127.0.0.1:5000/doctor/operations/add" class="btn btn-primary align-self-center">Add Operation</a>
+      </div>      
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          {% for r in data.header %}
+          <th>{{r}}</th>
+          {% endfor %} 
+        </tr>
+      </thead>
+      <tbody>
+         {% for r in data.rec %}
+         <tr>
+            <th>{{loop.index}} </th>
+            {% for l in r %}
+              <td> {{l}}</td>
+            {% endfor %}
+         </tr>
+         {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

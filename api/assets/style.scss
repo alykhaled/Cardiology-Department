@@ -13,14 +13,20 @@ ul {
     display: flex;
 
 }
+.grid-container{
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}
 
 .myNavbar{
     height: 100%;
+    // visibility: hidden;
     box-shadow: 0 0 10pt 1pt #D3D3D3;
     -webkit-box-shadow: 0 0 10pt 1pt #D3D3D3;
     -moz-box-shadow: 0 0 10pt 1pt #D3D3D3;
     -webkit-appearance: none;
     width: 300px;
+    // width: 0px;
     float:left;
     display: flex;
     flex-direction: column;
@@ -33,7 +39,7 @@ ul {
         // align-self: flex-end;
         margin-top: auto;
         // font-size: 32px;
-        width: fit-content;
+        // width: fit-content;
         // background-color: red;
     }
     ul{

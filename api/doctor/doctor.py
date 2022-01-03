@@ -14,8 +14,7 @@ mycursor = mydb.cursor()
 @doctorBp.route('/')
 def doctorIndex():
     '''
-    This is the index page for the doctor
-    that view some statics about latest
+    This is the index page for the doctor that view some statics about latest
     operations and patients that are
     waiting for a doctor
     '''
@@ -29,7 +28,7 @@ def viewOperations():
     to view and to add a new operation to the database
     using there api
     '''
-    mycursor.execute("SELECT * FROM operationsDB.Patients")
+    mycursor.execute("SELECT * FROM operationsDB.Patient")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -46,8 +45,6 @@ def addOperations():
     to view and to add a new operation to the database
     using there api
     '''
-
-
     return render_template("doctorAddOperation.html")
 
 @doctorBp.route('/patients')
@@ -57,7 +54,7 @@ def viewPatients():
     to view patients in a table
     '''
 
-    mycursor.execute("SELECT * FROM operationsDB.Patients")
+    mycursor.execute("SELECT * FROM operationsDB.Patient")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -74,7 +71,7 @@ def viewNurses():
     to view nurses in a table
     '''
 
-    mycursor.execute("SELECT * FROM operationsDB.Patients")
+    mycursor.execute("SELECT * FROM operationsDB.Patient")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -91,7 +88,7 @@ def viewRooms():
     to view rooms in a table
     '''
 
-    mycursor.execute("SELECT * FROM operationsDB.Patients")
+    mycursor.execute("SELECT * FROM operationsDB.Patient")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -107,7 +104,25 @@ def addDoctor():
     This is add POST request for the doctor
     that add a new doctor to the database
     '''
-    return render_template("doctorView.html")
+    if request.method == 'POST':
+        name = request.form['name']
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+        ssn = request.form['ssn']
+        biography = request.form['biography']
+        gender = request.form['gender']
+        birthdate = request.form['birthdate']
+        phone = request.form['phone']
+        address = request.form['address']
+        image = request.files['image']
+        sql = "INSERT INTO `operationsDB`.`Doctor` (`id`, `name`, `username`, `password`, `biography`, `phoneNumber`, `email`, `gender`, `birthdate`, `ssn`, `address`,`image`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"
+        val = ("99",name,username,password,biography,phone,email,gender,birthdate,ssn,address,image.read())
+        mycursor.execute(sql,val)
+        mydb.commit()
+        print(name,username,password,biography,phone,email,gender,birthdate,ssn,address,image.read())
+
+    return render_template("adminAddDoctor.html")
 
 @doctorBp.route('/get' ,methods=['GET'])
 def getDoctor():
