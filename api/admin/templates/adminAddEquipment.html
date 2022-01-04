@@ -1,0 +1,34 @@
+{% extends "index.html" %}
+{% block head %}
+    <h3>Add Equipment</h3>
+    <form action="http://localhost:5000/equipment/add" method="POST" enctype="multipart/form-data">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="name">Equipment_Name</label>
+            <input type="text" class="form-control" id="Equipment_Name" name="Equipment_Name" placeholder="Equipment_Name">
+          </div>
+          
+        </div>
+        <div class="form-group">
+            <label for="ssn">Equipment_id</label>
+            <input type="text" class="form-control" id="Equipment_id" name="Equipment_id" >
+        </div>
+        <div class="form-group">
+            <label for="ssn">Eq_room</label>
+            <input type="text" class="form-control" id="Eq_room" name="Eq_room" >
+        </div>
+        <div class="form-group">
+          <label for="Equipment_Model">Equipment_Model</label>
+          <input type="text" class="form-control" id="Equipment_Model" name="Equipment_Model" >
+        </div>
+        
+        <div class="form-group">
+          <label for="Eq_Admissiondate">Eq_Admissiondate</label>
+          <input type="date" class="form-control" id="Eq_Admissiondate" name="Eq_Admissiondate" >
+        </div>
+
+        
+        
+        <button type="submit" class="btn btn-primary">Add Equipment</button>
+    </form>
+    {% endblock %}
