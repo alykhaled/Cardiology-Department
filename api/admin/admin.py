@@ -44,6 +44,17 @@ def addOperations():
 
     return render_template("adminAddOperation.html")
 
+@adminBp.route('/equipment/add')
+def addEquipment():
+    '''
+    This is the page that allows the admin
+    to view and to add a new equipment to the database
+    using there api
+    '''
+
+    return render_template("adminAddEquipment.html")
+
+
 @adminBp.route('/patients')
 def viewPatient():
     '''
@@ -146,3 +157,19 @@ def viewRooms():
         'header':row_headers
     }
     return render_template("adminViewRooms.html",data=data)
+@adminBp.route('/equipment')
+def viewEquipment():
+    '''
+    This is the page that allows the admin
+    to view equipment in a table
+    '''
+
+    mycursor.execute("SELECT * FROM operationsDB.Equipment")
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    data = {
+        'message':"data retrieved",
+        'rec':myresult,
+        'header':row_headers
+    }
+    return render_template("adminViewEquipment.html",data=data)
