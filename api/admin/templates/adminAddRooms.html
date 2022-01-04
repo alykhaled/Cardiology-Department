@@ -1,19 +1,15 @@
 {% extends "index.html" %}
 {% block head %}
     <h3>Add Room</h3>
-    <form action="http://localhost:5000/rooms/add" method="POST" enctype="multipart/form-data">
+    <form action="http://localhost:5000/room/add" method="POST" enctype="multipart/form-data">
        
         <div class="form-group">
-            <label for="name">Room ID</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Room ID">
+            <label for="Operation_Room_ID">Room ID</label>
+            <input type="text" class="form-control" id="Operation_Room_ID" name="Operation_Room_ID" placeholder="Room ID">
         </div>
         <div class="form-group">
-            <label for="name">Equipment ID</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Equipment ID">
-        </div>
-        <div class="form-group">
-            <label for="name">Operation ID</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Operation ID">
+            <label for="Operation_ID">Operation ID</label>
+            <input type="text" class="form-control" id="Operation_ID" name="Operation_ID" placeholder="Operation ID">
         </div>
         <button type="submit" class="btn btn-primary">Add Room</button>
       </form>
