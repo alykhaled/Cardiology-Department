@@ -51,7 +51,7 @@ def viewPatient():
     to view patient in a table
     '''
 
-    mycursor.execute("SELECT * FROM operationsDB.Patient")
+    mycursor.execute("SELECT name,phone,currentOperation,illness,bdate FROM operationsDB.Patient")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -76,6 +76,23 @@ def viewNurses():
         'header':row_headers
     }
     return render_template("adminViewNurses.html",data=data)
+
+@adminBp.route('/nurses/add')
+def addNurses():
+    '''
+    This is the page that allows the admin to view nurses in a table
+    '''
+
+    return render_template("adminAddNurse.html")
+
+@adminBp.route('/patients/add')
+def addPatients():
+    '''
+    This is the page that allows the admin to view nurses in a table
+    '''
+    print("test")
+    return render_template("adminAddPatient.html")
+
 
 @adminBp.route('/doctors')
 def viewDoctors():
