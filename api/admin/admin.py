@@ -23,7 +23,7 @@ def viewOperations():
     to view and to add a new operation to the database
     using there api
     '''
-    mycursor.execute("SELECT * FROM operationsDB.Patient")
+    mycursor.execute("SELECT * FROM operationsDB.Operation")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -44,6 +44,17 @@ def addOperations():
 
     return render_template("adminAddOperation.html")
 
+@adminBp.route('/equipment/add')
+def addEquipment():
+    '''
+    This is the page that allows the admin
+    to view and to add a new equipment to the database
+    using there api
+    '''
+
+    return render_template("adminAddEquipment.html")
+
+
 @adminBp.route('/patients')
 def viewPatient():
     '''
@@ -51,7 +62,7 @@ def viewPatient():
     to view patient in a table
     '''
 
-    mycursor.execute("SELECT * FROM operationsDB.Patient")
+    mycursor.execute("SELECT name,phone,currentOperation,illness,bdate FROM operationsDB.Patient")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -67,7 +78,7 @@ def viewNurses():
     This is the page that allows the admin to view nurses in a table
     '''
 
-    mycursor.execute("SELECT * FROM operationsDB.Patient")
+    mycursor.execute("SELECT ssn,name,birthdate,address,currentOperation,superSsn,salary,biography,phone,gender,username,email,password FROM operationsDB.Nurse")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -76,6 +87,23 @@ def viewNurses():
         'header':row_headers
     }
     return render_template("adminViewNurses.html",data=data)
+
+@adminBp.route('/nurses/add')
+def addNurses():
+    '''
+    This is the page that allows the admin to view nurses in a table
+    '''
+
+    return render_template("adminAddNurse.html")
+
+@adminBp.route('/patients/add')
+def addPatients():
+    '''
+    This is the page that allows the admin to view nurses in a table
+    '''
+    print("test")
+    return render_template("adminAddPatient.html")
+
 
 @adminBp.route('/doctors')
 def viewDoctors():
@@ -139,3 +167,21 @@ def addRooms():
 
   
     return render_template("adminAddRooms.html")
+  
+@adminBp.route('/equipment')
+def viewEquipment():
+    '''
+    This is the page that allows the admin
+    to view equipment in a table
+    '''
+
+    mycursor.execute("SELECT * FROM operationsDB.Equipment")
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    data = {
+        'message':"data retrieved",
+        'rec':myresult,
+        'header':row_headers
+    }
+    return render_template("adminViewEquipment.html",data=data)
+
