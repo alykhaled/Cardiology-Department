@@ -148,7 +148,7 @@ def viewRooms():
     to view rooms in a table
     '''
 
-    mycursor.execute("SELECT * FROM operationsDB.Patient")
+    mycursor.execute("SELECT * FROM operationsDB.`Operation Room`;")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -157,6 +157,17 @@ def viewRooms():
         'header':row_headers
     }
     return render_template("adminViewRooms.html",data=data)
+
+@adminBp.route('/rooms/add')
+def addRooms():
+    '''
+    This is the page that allows the admin
+    to view rooms in a table
+    '''
+
+  
+    return render_template("adminAddRooms.html")
+  
 @adminBp.route('/equipment')
 def viewEquipment():
     '''
@@ -173,3 +184,4 @@ def viewEquipment():
         'header':row_headers
     }
     return render_template("adminViewEquipment.html",data=data)
+
