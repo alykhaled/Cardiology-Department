@@ -6,3 +6,12 @@ homeBp = Blueprint('homeBp', __name__, template_folder='templates',static_folder
 @homeBp.route('/')
 def index():
     return render_template("home.html")
+
+@homeBp.route('/Contactus')
+def contactus():
+    return render_template("Contactus.html")
+
+@homeBp.route('/login', methods=['GET','POST'])
+def login_page():
+    return render_template("login.html")
+    
