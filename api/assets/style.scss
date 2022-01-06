@@ -13,12 +13,8 @@ ul {
     display: flex;
 
 }
-.grid-container{
-    display: grid;
-    grid-template-columns: auto auto auto auto;
-}
-
 .myNavbar{
+
     height: 100vh;
     // visibility: hidden;
     box-shadow: 0 0 10pt 1pt #D3D3D3;
@@ -27,7 +23,6 @@ ul {
     -webkit-appearance: none;
     width: 300px;
     min-width: 174px;
-    // width: 0px;
     float:left;
     display: flex;
     flex-direction: column;
@@ -49,6 +44,23 @@ ul {
     ul{
         width: 100%;
         margin-top: 20px;
+    }
+    @media (max-width:780px){
+        // margin: 20px 0;
+        width: 0%;
+        display: none;
+    }
+}
+
+.doctorImage{
+    width: 500px; 
+    border-radius: 50px;
+    @media (max-width:780px)
+    { 
+        text-align: center;
+        width: 100%;
+        border-radius: 20px;
+
     }
 }
 
