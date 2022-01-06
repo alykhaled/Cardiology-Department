@@ -116,8 +116,8 @@ def addDoctor():
         phone = request.form['phone']
         address = request.form['address']
         image = request.files['image']
-        sql = "INSERT INTO `operationsDB`.`Doctor` (`id`, `name`, `username`, `password`, `biography`, `phoneNumber`, `email`, `gender`, `birthdate`, `ssn`, `address`,`image`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"
-        val = ("77",name,username,password,biography,phone,email,gender,birthdate,ssn,address,image.read())
+        sql = "INSERT INTO `operationsDB`.`Doctor` (`name`, `username`, `password`, `biography`, `phoneNumber`, `email`, `gender`, `birthdate`, `ssn`, `address`,`image`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"
+        val = (name,username,password,biography,phone,email,gender,birthdate,ssn,address,image.read())
         mycursor.execute(sql,val)
         mydb.commit()
         # print(name,username,password,biography,phone,email,gender,birthdate,ssn,address,image.read())
