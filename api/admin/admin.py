@@ -111,12 +111,12 @@ def viewDoctors():
     This is the page that allows the admin to view nurses in a table
     '''
 
-    mycursor.execute("SELECT name,biography,email,image FROM operationsDB.Doctor;")
+    mycursor.execute("SELECT name,biography,email,image,ssn FROM operationsDB.Doctor;")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     
     # tesst = b64encode(myresult[0][3])
-    myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8")) for r in myresult]
+    myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4]) for r in myresult]
     # print(myresult)
     data = {
         'message':"data retrieved",
@@ -124,6 +124,22 @@ def viewDoctors():
         'header':row_headers
     }
     return render_template("adminViewDoctors.html",data=data)
+
+@adminBp.route('/doctors/<doctor_id>')
+def viewDoctor(doctor_id):
+    '''
+    This is the page that allows the admin to view one doctor page
+    '''
+
+    mycursor.execute("SELECT name,biography,email,image,phoneNumber,gender,birthdate,address FROM operationsDB.Doctor WHERE ssn="+ doctor_id)
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    
+    # tesst = b64encode(myresult[0][3])
+    myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4],r[5],r[6],r[7]) for r in myresult]
+    print(myresult)
+
+    return render_template("adminViewDoctor.html",data=myresult)
 
 @adminBp.route('/doctors/add')
 def addDoctors():
