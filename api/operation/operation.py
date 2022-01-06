@@ -25,13 +25,12 @@ def addOperation():
         date = request.form['date']
         startTime = request.form['startTime']
         endTime = request.form['endTime']
-        sql = "INSERT INTO `operationsDB`.`Operation Room` (`id`,`operationName`,`patientId`,`doctorId`,`roomId`,`date`,`startTime`,`endTime`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s);"
+        sql = "INSERT INTO `operationsDB`.`Operation` (`id`,`operationName`,`patientId`,`doctorId`,`roomId`,`date`,`startTime`,`endTime`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s);"
         val = (id,operationName,patientId,doctorId,roomId,date,startTime,endTime)
         mycursor.execute(sql,val)
         mydb.commit()
-        print(id,operationName,patientId,doctorId,roomId,date,startTime,endTime)
-
-    return render_template("adminAddOperation.html")
+        # print(id,operationName,patientId,doctorId,roomId,date,startTime,endTime)
+    return redirect(url_for('adminBp.viewOperations'))
 
 
 @operationBp.route('/get' ,methods=['GET'])
@@ -52,3 +51,4 @@ def deleteOperation(operation_id):
     # val = (int(operation_id))
     mycursor.execute(sql)
     mydb.commit()
+    return redirect(url_for('adminBp.viewOperations'))
