@@ -8,13 +8,18 @@
     <title>Operation Department</title>
     
   </head>
-  <body>
-    <div class="main">
-      <div class="myNavbar">
+  <body style="background-color: #F1F3F9;">
+    <div class="main" >
+      <div id="myNavbar" class="myNavbar" style="background-color: white;">
+        <div class="menuBtn open py-4" onclick="openMenu(this)">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
         <div class="logo">
           <img style="width: 150px;" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGlZga-7IDoF0pzcIIcfJuXQagSR5zOAY2uw&usqp=CAU" alt="gdf">
         </div>
-        <ul id="navBar">
+        <ul id="navBar ">
           <li class="myNavItem {{ 'selected' if request.path == '/admin/' }}" onclick="chooseView(this);">
             <a href="/admin" style="text-decoration: none; ">
               <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABmJLR0QA/wD/AP+gvaeTAAABpUlEQVRIid2VTU4CQRCFPxkhJMpS4hkAzyBewAAxLNQ9kaigh1DiMRR0qyeQiB5AJIp/F3CJLnQDLrrabseeGXDJSzrDzKt6VfOmuoFpRwIoA6dAH/iQ1QdawiX+K14CXoFRxHoBipMIx4AjS+AW2AUywJysLFADulZcQ3IjocU/gYov6Qbo+JrZklhdJBQlS3zZwXeAK+s+Kde8VaQQJJ7AeF6RZ23gOiA+DdwBdbmvSu4zEHcllDGea1s6/LbELz6SaxLwrGdrrgJnQu4EdKyxgPm4D8CixdXledOV+ChkJkA4BmwCPavztC8mK1zfJTAQMsXfaUHE9Uj2fOI6PiX8wO7KhaEEBuEQeJsgHoi2aAbYANbltws5QixqCVmL6iQE+6Jx7CL1mHYx1rVxj6nGpcV7mAH4GVP7G5yjNtoSZqN5hHs7i/If1JGRRW20i6CEIuaoyIcI+7ECfEmx1ajghlWkinqLIHjAtoiPgINxuolZRfSGqqNef15WDtjDeD4U8bGOa40Cys+oP5wnxrAlCHHURDRR5867rHvgRDjnyTk9+AYamo0HgL/McwAAAABJRU5ErkJggg=="/>
@@ -63,7 +68,12 @@
           <span>Dr Michael Scott</span>
         </div>
       </div>
-      <div class="mainContent p-4 " style="background-color: #F1F3F9;">
+      <div id="mainContent"  class="mainContent p-4 " style="background-color: #F1F3F9;">
+        <div id="menuBtn" class="menuBtn" onclick="openMenu(this)">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
         {% block head %}
         <h2>Welcome</h2>
         
@@ -71,6 +81,7 @@
       </div>
     </div>
     <!-- Optional JavaScript -->
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>

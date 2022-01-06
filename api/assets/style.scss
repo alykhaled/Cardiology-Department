@@ -11,6 +11,39 @@ ul {
 .main{
     // min-height: 100vh;
     display: flex;
+    min-width: 100%;
+
+}
+.menuBtn{
+    margin-left: 10px;
+    padding: 5px;
+    @media (min-width:780px){
+        visibility:hidden;
+        width: 0;
+    }
+    span{
+        width: 20px;
+        display: block;
+        background: #000;
+        height: 2px;
+        transition: all 300ms ease-in-out;
+        transform-origin: 3px 1px;
+        &:not(:last-child){
+            margin-bottom: 3px;
+        }
+    }
+    
+    &.open{
+        > span:first-child{
+            transform: rotate(45deg);
+        }
+        > span:nth-child(2){
+            opacity: 0;
+        }
+        > span:last-child{
+            transform: rotate(-45deg);
+        }
+    }
 
 }
 .myNavbar{
@@ -45,10 +78,32 @@ ul {
         width: 100%;
         margin-top: 20px;
     }
+    transition: all 200ms ease-in-out;
+    // transform: translateX(100%);
+    @keyframes open {
+        from{
+          opacity: 0;
+          transform: translateX(50px);
+        }
+        to{
+          opacity: 1;
+          transform: translateX(0px);
+        }
+    }
+    &.open{
+        transform: translateX(0);
+    }
     @media (max-width:780px){
         // margin: 20px 0;
         width: 0%;
         display: none;
+        &.open{           
+            width: 150px;
+            display: flex;
+            position: absolute;
+            z-index: 5;
+        }
+        
     }
 }
 

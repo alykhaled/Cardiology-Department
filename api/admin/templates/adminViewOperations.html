@@ -1,8 +1,8 @@
 {% extends "index.html" %}
-{% block head %}
-    <h3>View Operations</h3>
+{% block head %}  
+    <h3 class="px-3">View Operations</h3>
     <nav class="navbar navbar-light">
-      <h5 class="align-self-center col" >Total of {{data.rec|count}} operations</h5>
+      <h5 class="align-self-center col p-0" >Total of {{data.rec|count}} operations</h5>
       <form class="form-inline">
         <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
