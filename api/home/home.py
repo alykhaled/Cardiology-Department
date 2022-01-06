@@ -7,11 +7,11 @@ homeBp = Blueprint('homeBp', __name__, template_folder='templates',static_folder
 def index():
     return render_template("home.html")
 
-@homeBp.route('/Contactus')
+@homeBp.route('/contact')
 def contactus():
     return render_template("Contactus.html")
 
 @homeBp.route('/login', methods=['GET','POST'])
 def login_page():
-    return render_template("login.html")
+    return render_template("home.html")
     

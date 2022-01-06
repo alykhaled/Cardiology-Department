@@ -1,11 +1,28 @@
 {% extends "index.html" %}
 {% block head %}
     <h3>View Operations</h3>
-    <div class="row">
+    <nav class="navbar navbar-light">
       <h5 class="align-self-center col" >Total of {{data.rec|count}} operations</h5>
+      <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <div class="col">
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="type" id="gridRadios1" value="name">
+            <label class="form-check-label" for="gridRadios1">Search by Name</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="type" id="gridRadios2" value="patient">
+            <label class="form-check-label" for="gridRadios2">Search by Patient ID</label>
+          </div>
+        </div>
+      </form>
       <div class="text-right p-4 col">
         <a href="http://127.0.0.1:5000/admin/operations/add" class="btn btn-primary align-self-center">Add Operation</a>
-      </div>      
+      </div>  
+    </nav>
+    <div class="row">
+          
     </div>
 
     <table class="table">

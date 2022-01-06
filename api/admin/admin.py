@@ -16,7 +16,13 @@ mycursor = mydb.cursor()
 
 @adminBp.route('/')
 def index():
-    return render_template('index.html')
+    mycursor.execute("SELECT COUNT(ssn) FROM operationsDB.Patient WHERE gender='female';")
+    femalesNum = mycursor.fetchall();
+    mycursor.execute("SELECT COUNT(ssn) FROM operationsDB.Patient WHERE gender='male';")
+    malesNum = mycursor.fetchall();
+    data = {'Task' : 'Hours per Day', 'Male' : malesNum[0][0], 'Female' : femalesNum[0][0]}
+
+    return render_template('adminDashboard.html',data=data)
 
 @adminBp.route('/operations')
 def viewOperations():
@@ -25,7 +31,7 @@ def viewOperations():
     to view and to add a new operation to the database
     using there api
     '''
-    mycursor.execute("SELECT * FROM operationsDB.Operation;")
+    mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -56,7 +62,6 @@ def addEquipment():
 
     return render_template("adminAddEquipment.html")
 
-
 @adminBp.route('/patients')
 def viewPatient():
     '''
@@ -64,7 +69,7 @@ def viewPatient():
     to view patient in a table
     '''
 
-    mycursor.execute("SELECT ssn,name,medicalHistory,illness,bdate,phone,username,password,email,currentOperation,address,gender,Relatives_phone_Number FROM operationsDB.Patient")
+    mycursor.execute("SELECT ssn as SSN,name as Name ,phone as 'Phone Number',currentOperation as 'Current Operation ID',illness as Illness,bdate as  'Birthdate' FROM operationsDB.Patient")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -80,7 +85,7 @@ def viewNurses():
     This is the page that allows the admin to view nurses in a table
     '''
 
-    mycursor.execute("SELECT ssn,name,birthdate,address,currentOperation,superSsn,salary,biography,phone,gender,username,email,password FROM operationsDB.Nurse")
+    mycursor.execute("SELECT name,birthdate,address,currentOperation,superSsn,salary,biography,phone,gender FROM operationsDB.Nurse")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -105,20 +110,18 @@ def addPatients():
     '''
     return render_template("adminAddPatient.html")
 
-
 @adminBp.route('/doctors')
 def viewDoctors():
     '''
     This is the page that allows the admin to view nurses in a table
     '''
 
-    mycursor.execute("SELECT name,biography,email,image,ssn FROM operationsDB.Doctor;")
+    mycursor.execute("SELECT name,biography,email,image,ssn FROM operationsDB.Doctor ORDER BY name;")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     
     # tesst = b64encode(myresult[0][3])
     myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4]) for r in myresult]
-    print(myresult)
     data = {
         'message':"data retrieved",
         'rec':myresult,
@@ -138,7 +141,6 @@ def viewDoctor(doctor_id):
     
     # tesst = b64encode(myresult[0][3])
     myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4],r[5],r[6],r[7],r[8]) for r in myresult]
-    print(myresult)
 
     return render_template("adminViewDoctor.html",data=myresult)
 

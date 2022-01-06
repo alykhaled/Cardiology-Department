@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}" >
     <title>Operation Department</title>
+    
   </head>
   <body>
     <div class="main">
@@ -32,25 +33,25 @@
               <span>Doctors</span>
             </a>
           </li>
-          <li class="myNavItem {{ 'selected' if request.path == '/admin/patients' }}" onclick="chooseView(this);">
+          <li class="myNavItem {{ 'selected' if '/admin/patients' in request.path }}" onclick="chooseView(this);">
             <a href="/admin/patients" style="text-decoration: none;">
               <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAYAAACqaXHeAAAABmJLR0QA/wD/AP+gvaeTAAADg0lEQVR4nO2az0sWQRjHP1oSgQeFLr1l0g+JjkFgYIJ1K7FTf4AHoe5Bb6dOHYKobtkpT5VWUKFYXYJ8i8BjHbtEaobpG0pBVrod5tnedZ3dnXfffXff93U+MIz77O6zz3x35pl3ZwSLxWKxWCwxeQs4IaWQXWhmNFV4v5PCM6rK9oT86BppIk7mNGcdQNZYARL21w/MsrH7O8AMcDrhZ9UEbrZ3mSF4RvicenQp4BfAfxxlzxybA7IOIGuSFmBR6hMeW6/Uswk/qybwj+3rBCfBq6lHlwJ+AVoIFqEl9ehSwCTr1+wMADYJWgFcATqAx8CKlCfA4ayCSpsOYInNSaso58Ko+xwA6s07wASQQzV6UmwPPdedkmvmgG/AOA0iwAoqwL0eW4fYluX4IrBO8Bzvp64EiGpED6rxq8AlVC/JAXmxOcAZ1KrQccJ/DJmWVeAjMAwcidGmJuAm6gV+AI557K88zymYCDAhdV5zTT6BxkaVP8AI0A20Ggow6PPxXuxHNf4jBZiXOqe5Judz9gm4AZwE2g2D1dGKavAI8FsTtGk5L/Wa+L0ix3coQ4AvRAuwENAQ00B/AS/ZmIdc9gG3UENi1dDfD9SLaJLjdfE1Lcf95Qjgzgi6IXBZzj2vUAC3vAjwUwmuALul/gnspAwB+iglpjz6JNhXYZBd4ud7hX789Irfr8CQ/P1MzhkL0GhlyNs+d4zA5s0NnSj1joP6jTOHp31RPaARcJPetMfmAM5W+RockHrcf8Jkb9A/RIKO64FNApSTAxpBgGZK8Tpg1gP8wkQd1yKOr/7PVskBgXiHwJakGXiTdRAZEutfeNqA16ieU6S089MGTGnsSdCNWoVygHfArgh71dmBWi5zUF9y5yLslTCA+oBxgKeoDxmAswH21NgG3JYA/gIXPPZhjT0Og6gFEQe4S2nWCrJngndV6JqBPWu/VSHJN5VGz6oKSYzVNHOLEYeAB6hMWwTGgP0h1/dQ2mQpUFoX9Nqn0K8XtlOaRZbkHtde0Nh1HEAJtSBlDDgYcn0oXeIk6wWMSssi6kWWzSNxMAHsQS1YuuuDtVx08Xp3uIwpys26HaNiHIdVJizeRe0dhH8MrYWcqzdi/U4YRak3iVK1A7X8nXUXjyq6eMfiCNBISVC34WIswihqGpwH7gGdcZ2lQCdwH7UPsIx687Ebb7FYLBZLg/MP1YinA3XB0cQAAAAASUVORK5CYII="/>
               <span>Patients</span>
             </a>
           </li>
-          <li class="myNavItem {{ 'selected' if request.path == '/admin/nurses' }}" onclick="chooseView(this);">
+          <li class="myNavItem {{ 'selected' if '/admin/nurses' in request.path  }}" onclick="chooseView(this);">
             <a href="/admin/nurses" style="text-decoration: none;">
               <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAEnUlEQVRYhe1WW2wUZRT+vn92S6l2ibS4SfufaQtLwAiKIYEHQQWFYEKaVONLg29eiFJvxHiNBTEkKCaCQQXl1ZiIiqLRiMZoYtRgNYINIkjpzGQtl4KWArtt5z8+0GJbdtsC8Um+ZDKZc/3OmX/mHOAy/u/gaAaZTCaVy+VuAzDFGGPGEtQ55wAcyOVyXxw7duzkSLbeSEpr7Yo4jt8zxqRJnnLOlarq+NEuY8yVJJckEol1EyZMON3V1bVrLMSHQETWikiLtXZqEXKNhe7DbKZaa38SkReK5SnYUt/356lqo3NucRRF+y+YfT+iKNqvqosA3O37/o2FbAqeAd/3tznnPoui6K3BcmvtRFWd5nleBsBEAKX9qpxzrlNV/yC5L4qi48P87gWwOIqiu4bnShQi4Jyb73leE4CEiCwEcAeAmwBUkdyrqgdV9SiAXL9LKck5JKcAmC4iWQBfk3w/CIKvSH4CYE2hXAUJkJykqstF5D6Sbaq6TVU3RVHUCsAV8hkEz1p7LclFqvq8iNSS3KKqk0bxA9Lp9BW+768WkVhENtXW1k4vZmutbRIRFRG11jYVs6upqblGRF4Tkdha21xVVVU2WH/uEIrI/JKSkj0ApsRxXBeG4YOHDh36rVhgY0wFydUkVxtjKorZtbe37w3D8IFEIjGZ5DTP8/b4vj9vCAEReQbA26q6IgiCZdlsNigW8GLR1tbWHoZhI8mHVfUd3/efAgCKyFYAMwA0hGGYHSmItbaJ5MaBZ1V9CACGy6IoenWkOCJSBWA7gN0Ukd2q+gSAjDGmJwiCzcUcfd9fBQBBEKy6GP2wYm4nuS5Bcj2Ax3p7exuTyeQNOPtl9BVycs51ktwoIs0D1QL/dkBVz8nGgJUkX+Ls2bOThw8f3m+MudM596QxZmcQBFtG8x6odgBjqXoA1dXVs4wxH6VSqYxpaWnpNca8oqqPG2M29L+OEYfUpcIY8zTJl1tbW3sMAOTz+TdVdYFzrgPAn77vN4wWpP/X26yqzc65zrEm931/MoBbzpw5sxUYNAtEZA2ACpKfOufuj6Jo6QWXNgaIyBsAjoRh+NwQAtXV1RXGmH2e583o7u4+VWiRqKurS8dxfJ2qVqtquTGmDEBeVf8CcJzkr0EQHCyWPJ1OX11SUrK3t7d3ekdHx9EhBPrZbQJwIgzDZwGgsrKyvKysbImqNgBYCCBJ8hdVDQB0q2o3zg6iq0hWqupMAOUAfiS5w/O8D9va2toHxV8LIBWG4YoB2RACvu9PVtXvSS5Q1eUAlgH4juT2fD6/c9y4ceMBzHDO1ZAsV9USAKcBnADQCWBPPp8/WlpaOgdAPYB6kgdUdUNXV9fnqVTqd5JzB3fpvH3AWvstyesBbASwFcDNAJYCuBXAkf4OtKvq38aYPIAyVa0AUAlgJoAaAD+r6o6+vr6Pk8lkBsCjJGep6q4wDBcPznfeOE4kEivjOH4XwHgAPwD4huQHzrl7hi8ahZDJZFI9PT1zATQkk8kvVfUggNcBrCf54nD7ghuRtXYzyZNxHG/IZrPhaElHgCciSwE8AuBkGIb1lxDrMi7jv8E/TvUVVifphhwAAAAASUVORK5CYII="/>
               <span>Nurses</span>
             </a> 
           </li>
-          <li class="myNavItem {{ 'selected' if request.path == '/admin/equipment' }}" onclick="chooseView(this);">
+          <li class="myNavItem {{ 'selected' if '/admin/equipment' in request.path }}" onclick="chooseView(this);">
             <a href="/admin/equipment" style="text-decoration: none;">
               <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAABmJLR0QA/wD/AP+gvaeTAAAEnUlEQVRYhe1WW2wUZRT+vn92S6l2ibS4SfufaQtLwAiKIYEHQQWFYEKaVONLg29eiFJvxHiNBTEkKCaCQQXl1ZiIiqLRiMZoYtRgNYINIkjpzGQtl4KWArtt5z8+0GJbdtsC8Um+ZDKZc/3OmX/mHOAy/u/gaAaZTCaVy+VuAzDFGGPGEtQ55wAcyOVyXxw7duzkSLbeSEpr7Yo4jt8zxqRJnnLOlarq+NEuY8yVJJckEol1EyZMON3V1bVrLMSHQETWikiLtXZqEXKNhe7DbKZaa38SkReK5SnYUt/356lqo3NucRRF+y+YfT+iKNqvqosA3O37/o2FbAqeAd/3tznnPoui6K3BcmvtRFWd5nleBsBEAKX9qpxzrlNV/yC5L4qi48P87gWwOIqiu4bnShQi4Jyb73leE4CEiCwEcAeAmwBUkdyrqgdV9SiAXL9LKck5JKcAmC4iWQBfk3w/CIKvSH4CYE2hXAUJkJykqstF5D6Sbaq6TVU3RVHUCsAV8hkEz1p7LclFqvq8iNSS3KKqk0bxA9Lp9BW+768WkVhENtXW1k4vZmutbRIRFRG11jYVs6upqblGRF4Tkdha21xVVVU2WH/uEIrI/JKSkj0ApsRxXBeG4YOHDh36rVhgY0wFydUkVxtjKorZtbe37w3D8IFEIjGZ5DTP8/b4vj9vCAEReQbA26q6IgiCZdlsNigW8GLR1tbWHoZhI8mHVfUd3/efAgCKyFYAMwA0hGGYHSmItbaJ5MaBZ1V9CACGy6IoenWkOCJSBWA7gN0Ukd2q+gSAjDGmJwiCzcUcfd9fBQBBEKy6GP2wYm4nuS5Bcj2Ax3p7exuTyeQNOPtl9BVycs51ktwoIs0D1QL/dkBVz8nGgJUkX+Ls2bOThw8f3m+MudM596QxZmcQBFtG8x6odgBjqXoA1dXVs4wxH6VSqYxpaWnpNca8oqqPG2M29L+OEYfUpcIY8zTJl1tbW3sMAOTz+TdVdYFzrgPAn77vN4wWpP/X26yqzc65zrEm931/MoBbzpw5sxUYNAtEZA2ACpKfOufuj6Jo6QWXNgaIyBsAjoRh+NwQAtXV1RXGmH2e583o7u4+VWiRqKurS8dxfJ2qVqtquTGmDEBeVf8CcJzkr0EQHCyWPJ1OX11SUrK3t7d3ekdHx9EhBPrZbQJwIgzDZwGgsrKyvKysbImqNgBYCCBJ8hdVDQB0q2o3zg6iq0hWqupMAOUAfiS5w/O8D9va2toHxV8LIBWG4YoB2RACvu9PVtXvSS5Q1eUAlgH4juT2fD6/c9y4ceMBzHDO1ZAsV9USAKcBnADQCWBPPp8/WlpaOgdAPYB6kgdUdUNXV9fnqVTqd5JzB3fpvH3AWvstyesBbASwFcDNAJYCuBXAkf4OtKvq38aYPIAyVa0AUAlgJoAaAD+r6o6+vr6Pk8lkBsCjJGep6q4wDBcPznfeOE4kEivjOH4XwHgAPwD4huQHzrl7hi8ahZDJZFI9PT1zATQkk8kvVfUggNcBrCf54nD7ghuRtXYzyZNxHG/IZrPhaElHgCciSwE8AuBkGIb1lxDrMi7jv8E/TvUVVifphhwAAAAASUVORK5CYII="/>
               <span>Equipment</span>
             </a> 
           </li>
-          <li class="myNavItem {{ 'selected' if request.path == '/admin/rooms' }}" onclick="chooseView(this);">
+          <li class="myNavItem {{ 'selected' if '/admin/rooms' in request.path }}" onclick="chooseView(this);">
             <a href="/admin/rooms" style="text-decoration: none;">
               <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAABmJLR0QA/wD/AP+gvaeTAAADoklEQVRoge3aTYgcRRQH8N8GddcoJMYYP3JSzG4uwUOOiiB4NSCai6AHD1FQVBD1IIIxCl49hkBEEQQ9aBT0EEQRJSrxY0ERxcRvSaKyfqDZ1U308KbZ6tmene6e2pmF7B8apru63nv/qlevq94bVnHmYAp78A2O4lFcOVKLGuAC7MI7OI3/Kq7DuBebRmRjT0xgJ17BPxYM/h37k/v9nWfF/Rxexk0YH7rVCbbjKfxswbh5HMRtOK/zXtFGkL4BLyiT/g3P4nqMDcP4KeHrXym7y2d4CBdX9EmJpNig2g2/w5MdXVnRy++/FzNyVZ/+vYik2GrpAWq9nsYtuMCcwVygDpEUdV12ICFrGxhUoCmRAq0H8y3laT2Eu7CxhREp2hJJsbFjyyFlG99cSuFubBlQcZXcXNgibOwpN7fCocpdk0HgZXgEX+PdBv3ewBE8Jq8HNBq5NWKxdX/Yqvr3e969dbloUHvrENksRv/b5P05QagtkafxR3I/ixdFxDo7N5GrcUCE4uK9L/GghY9VWyJEWL8Fr3fpOIEHchIpRmwWz+M6i2P4IERSXIr7Md1p/7eHTa2IFG1LfVNyEWlqU55ONd4ZCpEc4XdFYJXISsNZGWSsx60Z5GRD08V+DZ7B30n7hw3kjjRqrRenxenk2WlxetyFcxvIHSmRk8nvH/EErmhpzEiIFBvDeZH22aH++hoKkbrG3CF2pc/hp5p9RoY6I9QE3Se53ZhsqC+7a9VFr7N1er2Pe2rqGyqRCdwstvlptmMG+3Bt59rXedZN7Ea9U6ZDIdIm/9QrxTOjOsWzbES24nFRKkhH9T3crVnqqJcbHhXn+Mk+NjUmskn49Ac9FObI0RaB4UiXjuKqSpnWIjLKrHnhsicSvf2y/CUUDVV1jANiQU8sk/FVGBeB4CXl9dRddylhzOLpLFKmFw7D6j7YgDtVV8JQPo98kvw+hePCZ2eW3cz+mBElh2PCzQp8rMLFx1Qn3X4QtYtR1PzWiV31p4k9p8R62anGFusSUWBJw2yRiBtGeWw79uKvRP8xUcm6vI3ANDWaJs6+EERzrp8JEZU+Ul4Dh8WsZAs0m4WLHU+UnLQwS20xJUb6V+XItBfbBpDbF+cI/zyoHEGKkTs/g4xa5bWcmBSj+YvFo1lVJK2a1VmDz2o2rMXtFm9j3hbJ6R14TUScou1z3CfyACsSRcT50+KP7DxeNcQ/BuTAOrEjnhYbzIdFWF/FGYH/AQAMDLINoLBYAAAAAElFTkSuQmCC"/>
               <span>Rooms</span>
@@ -64,7 +65,8 @@
       </div>
       <div class="mainContent p-4 " style="background-color: #F1F3F9;">
         {% block head %}
-          <h1>Home Page!</h1>
+        <h2>Welcome</h2>
+        
         {% endblock %}
       </div>
     </div>
