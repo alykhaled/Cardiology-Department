@@ -23,7 +23,7 @@ def viewOperations():
     to view and to add a new operation to the database
     using there api
     '''
-    mycursor.execute("SELECT * FROM operationsDB.Operation")
+    mycursor.execute("SELECT * FROM operationsDB.Operation;")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {

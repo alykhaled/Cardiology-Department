@@ -34,9 +34,13 @@ def updateRoom():
     #     
     return("TestRoom")
 
-@roomBp.route('/delete' ,methods=['POST'])
-def deleteRoom():
+@roomBp.route('/delete/<Operation_Room_ID>' ,methods=['GET'])
+def deleteRoom(Operation_Room_ID):
     #TODO
-    #     
-    return("TestRoom")
+    sql = "DELETE FROM `Operation Room` WHERE Operation_Room_ID="+Operation_Room_ID
+    # val = (int(operation_id))
+    mycursor.execute(sql)
+    mydb.commit()
+    return render_template("adminViewRooms.html")
+   
 
