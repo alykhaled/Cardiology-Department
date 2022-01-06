@@ -12,6 +12,8 @@ mydb = mysql.connector.connect(
     database="operationsDB"
 )
 mycursor = mydb.cursor()
+mydb.autocommit = True
+
 @nurseBp.route('/add' ,methods=['POST'])
 def addNurse():
      

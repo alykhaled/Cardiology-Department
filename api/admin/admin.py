@@ -8,8 +8,10 @@ mydb = mysql.connector.connect(
     user="root",
     port=3306,
     passwd="alykhaled123",
-    database="operationsDB"
+    database="operationsDB",autocommit=True
 )
+mydb.autocommit = True
+
 mycursor = mydb.cursor()
 
 @adminBp.route('/')
@@ -117,7 +119,7 @@ def viewDoctors():
     
     # tesst = b64encode(myresult[0][3])
     myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4]) for r in myresult]
-    # print(myresult)
+    print(myresult)
     data = {
         'message':"data retrieved",
         'rec':myresult,

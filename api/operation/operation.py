@@ -6,8 +6,9 @@ mydb = mysql.connector.connect(
     user="root",
     port=3306,
     passwd="alykhaled123",
-    database="operationsDB"
+    database="operationsDB",autocommit=True
 )
+mydb.autocommit = True
 # mycursor = mydb.cursor()
 
 operationBp = Blueprint('operationBp', __name__, template_folder='templates',static_folder='static')
