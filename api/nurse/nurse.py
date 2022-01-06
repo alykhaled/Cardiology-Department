@@ -37,13 +37,7 @@ def addNurse():
         mycursor.execute(sql,val)
         mydb.commit()
         print(name,username,password,biography,phone,email,gender,birthdate,ssn,address,image.read()) 
-    return("Test")
-
-@nurseBp.route('/get' ,methods=['GET'])
-def getNurse():
-    #TODO
-    #     
-    return("Test")
+    return redirect(url_for('adminBp.viewNurses'))
 
 @nurseBp.route('/update' ,methods=['POST'])
 def updateNurse():
