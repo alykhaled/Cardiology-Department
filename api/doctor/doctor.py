@@ -28,7 +28,7 @@ def viewOperations():
     to view and to add a new operation to the database
     using there api
     '''
-    mycursor.execute("SELECT * FROM operationsDB.Operation")
+    mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -54,7 +54,7 @@ def viewPatients():
     to view patients in a table
     '''
 
-    mycursor.execute("SELECT ssn,name,medicalHistory,illness,bdate,phone,username,password,email,currentOperation,address,gender,Relatives_phone_Number FROM operationsDB.Patient")
+    mycursor.execute("SELECT ssn as SSN,name as Name ,phone as 'Phone Number',currentOperation as 'Current Operation ID',illness as Illness,bdate as  'Birthdate' FROM operationsDB.Patient")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -71,7 +71,7 @@ def viewNurses():
     to view nurses in a table
     '''
 
-    mycursor.execute("SELECT * FROM operationsDB.Nurse")
+    mycursor.execute("SELECT name,birthdate,address,currentOperation,superSsn,salary,biography,phone,gender FROM operationsDB.Nurse")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -123,14 +123,6 @@ def addDoctor():
         # print(name,username,password,biography,phone,email,gender,birthdate,ssn,address,image.read())
 
     return render_template("adminAddDoctor.html")
-
-@doctorBp.route('/get' ,methods=['GET'])
-def getDoctor():
-    '''
-    This is add POST request for the doctor
-    that add a new doctor to the database
-    '''  
-    return("Test")
 
 @doctorBp.route('/update' ,methods=['PUT'])
 def updateDoctor():
