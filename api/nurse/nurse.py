@@ -36,6 +36,7 @@ def addNurse():
         val = (ssn,name,birthdate,address,cOperation,SuperSSN,salary,biography,phone,gender,username,email,password,image.read())
         mycursor.execute(sql,val)
         mydb.commit()
+
         print(name,username,password,biography,phone,email,gender,birthdate,ssn,address,image.read()) 
     return redirect(url_for('adminBp.viewNurses'))
 
@@ -45,9 +46,12 @@ def updateNurse():
     #     
     return("Test")
 
-@nurseBp.route('/delete' ,methods=['POST'])
-def deleteNurse():
+@nurseBp.route('/delete/<ssn>' ,methods=['GET'])
+def deleteNurse(ssn):
     #TODO
-    #     
-    return("Test")
+    sql = "DELETE FROM Nurse WHERE ssn="+ssn
+    # val = (int(operation_id))
+    mycursor.execute(sql)
+    mydb.commit()
+    return redirect(url_for('adminBp.viewNurses'))
 

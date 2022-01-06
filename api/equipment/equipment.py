@@ -40,10 +40,10 @@ def updateEquipment():
     '''    
     return("Test")
 
-@equipmentBp.route('/delete' ,methods=['POST'])
-def deleteEquipment():
-    '''
-    This is delete request for the doctor
-    that delete a doctor from the database
-    '''    
-    return("Test")
+@equipmentBp.route('/delete/<Equipment_ID>' ,methods=['GET'])
+def deleteEquipment(Equipment_ID):
+    sql = "DELETE FROM Equipment WHERE Equipment_ID="+Equipment_ID
+    # val = (int(operation_id))
+    mycursor.execute(sql)
+    mydb.commit()
+    return redirect(url_for('adminBp.viewEquipment'))

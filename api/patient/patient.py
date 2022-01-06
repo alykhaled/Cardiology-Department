@@ -19,15 +19,26 @@ mycursor = mydb.cursor()
 def addPatient():
     #TODO
     if request.method == 'POST':
-        Operation_Room_ID = request.form['Operation_Room_ID']
-        Operation_ID = request.form['Operation_ID']
-        sql = "INSERT INTO `operationsDB`.`Operation Room` (`Operation_Room_ID`,`Operation_ID`) VALUES (%s,%s);"
-        val = (Operation_Room_ID,Operation_ID)
+        ssn = request.form['ssn']
+        name = request.form['name']
+        medicalHistory = request.form['medicalHistory']
+        illness = request.form['illness']
+        bdate = request.form['bdate']
+        phone = request.form['phone']
+        image = request.files['image']
+        username = request.form['username']
+        password = request.form['password']
+        email = request.form['email']
+        currentOperation = request.form['currentOperation']
+        address = request.form['address']
+        gender = request.form['gender']
+        Relatives_phone_Number = request.form['Relatives_phone_Number']
+        sql = "INSERT INTO `operationsDB`.`Patient` (`ssn`,`name`,`medicalHistory`,`illness`,`bdate`,`phone`,`image`,`username`,`password`,`email`,`currentOperation`,`address`,`gender`,`Relatives_phone_Number`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"
+        val = (ssn,name,medicalHistory,illness,bdate,phone,image.read(),username,password,email,currentOperation,address,gender,Relatives_phone_Number)
         mycursor.execute(sql,val)
         mydb.commit()
-        print(Operation_Room_ID,Operation_ID)
 
-    return render_template("adminAddRooms.html")
+    return redirect(url_for('adminBp.viewPatient'))
 
 
 @patientBp.route('/update' ,methods=['POST'])
@@ -36,9 +47,12 @@ def updatePatient():
     #     
     return("TestRoom")
 
-@patientBp.route('/delete/' ,methods=['GET'])
-def deletePatient():
-    
-    return render_template("adminViewPatients.html")
+@patientBp.route('/delete/<ssn>' ,methods=['GET'])
+def deletePatient(ssn):
+    sql = "DELETE FROM Patient WHERE ssn="+ssn
+    # val = (int(operation_id))
+    mycursor.execute(sql)
+    mydb.commit()
+    return redirect(url_for('adminBp.viewPatient'))
    
 

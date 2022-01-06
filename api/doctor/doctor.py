@@ -140,10 +140,10 @@ def updateDoctor():
     '''    
     return("Test")
 
-@doctorBp.route('/delete' ,methods=['POST'])
-def deleteDoctor():
-    '''
-    This is delete request for the doctor
-    that delete a doctor from the database
-    '''    
-    return("Test")
+@doctorBp.route('/delete/<ssn>' ,methods=['GET'])
+def deleteDoctor(ssn):
+    sql = "DELETE FROM Doctor WHERE ssn="+ssn
+    # val = (int(operation_id))
+    mycursor.execute(sql)
+    mydb.commit()
+    return redirect(url_for('adminBp.viewDoctors'))
