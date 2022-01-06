@@ -62,7 +62,7 @@ def viewPatient():
     to view patient in a table
     '''
 
-    mycursor.execute("SELECT name,phone,currentOperation,illness,bdate FROM operationsDB.Patient")
+    mycursor.execute("SELECT ssn,name,phone,currentOperation,illness,bdate FROM operationsDB.Patient")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -101,7 +101,6 @@ def addPatients():
     '''
     This is the page that allows the admin to view nurses in a table
     '''
-    print("test")
     return render_template("adminAddPatient.html")
 
 
@@ -131,12 +130,12 @@ def viewDoctor(doctor_id):
     This is the page that allows the admin to view one doctor page
     '''
 
-    mycursor.execute("SELECT name,biography,email,image,phoneNumber,gender,birthdate,address FROM operationsDB.Doctor WHERE ssn="+ doctor_id)
+    mycursor.execute("SELECT name,biography,email,image,phoneNumber,gender,birthdate,address,ssn FROM operationsDB.Doctor WHERE ssn="+ doctor_id)
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     
     # tesst = b64encode(myresult[0][3])
-    myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4],r[5],r[6],r[7]) for r in myresult]
+    myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4],r[5],r[6],r[7],r[8]) for r in myresult]
     print(myresult)
 
     return render_template("adminViewDoctor.html",data=myresult)

@@ -41,6 +41,6 @@ def deleteRoom(Operation_Room_ID):
     # val = (int(operation_id))
     mycursor.execute(sql)
     mydb.commit()
-    return render_template("adminViewRooms.html")
+    return redirect(url_for('adminBp.viewRooms'))
    
 
