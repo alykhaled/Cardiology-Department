@@ -5,6 +5,7 @@ from nurse.nurse import nurseBp
 from operation.operation import operationBp
 from room.room import roomBp
 from equipment.equipment import equipmentBp
+from patient.patient import patientBp
 from home.home import homeBp
 import mysql.connector
 
@@ -24,6 +25,7 @@ app.register_blueprint(nurseBp,url_prefix='/nurse')
 app.register_blueprint(operationBp,url_prefix='/operation')
 app.register_blueprint(equipmentBp,url_prefix='/equipment')
 app.register_blueprint(roomBp,url_prefix='/room')
+app.register_blueprint(patientBp,url_prefix='/patient')
 
 if __name__ == '__main__':
     app.run(debug=True)
