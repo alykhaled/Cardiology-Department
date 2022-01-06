@@ -12,6 +12,8 @@ mydb = mysql.connector.connect(
     database="operationsDB"
 )
 mycursor = mydb.cursor()
+mydb.autocommit = True
+
 @nurseBp.route('/add' ,methods=['POST'])
 def addNurse():
      
@@ -34,14 +36,9 @@ def addNurse():
         val = (ssn,name,birthdate,address,cOperation,SuperSSN,salary,biography,phone,gender,username,email,password,image.read())
         mycursor.execute(sql,val)
         mydb.commit()
-        # print(id,operationName,patientId,doctorId,roomId,date,startTime,endTime)
-    return redirect(url_for('adminBp.viewNurses'))
 
-@nurseBp.route('/get' ,methods=['GET'])
-def getNurse():
-    #TODO
-    #     
-    return("Test")
+        print(name,username,password,biography,phone,email,gender,birthdate,ssn,address,image.read()) 
+    return redirect(url_for('adminBp.viewNurses'))
 
 @nurseBp.route('/update' ,methods=['POST'])
 def updateNurse():

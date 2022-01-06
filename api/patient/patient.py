@@ -8,6 +8,8 @@ mydb = mysql.connector.connect(
     passwd="alykhaled123",
     database="operationsDB"
 )
+mydb.autocommit = True
+
 # mycursor = mydb.cursor()
 
 patientBp = Blueprint('patientBp', __name__, template_folder='templates',static_folder='static')

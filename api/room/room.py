@@ -9,6 +9,8 @@ mydb = mysql.connector.connect(
     database="operationsDB"
 )
 # mycursor = mydb.cursor()
+mydb.autocommit = True
+
 
 roomBp = Blueprint('roomBp', __name__, template_folder='templates',static_folder='static')
 
