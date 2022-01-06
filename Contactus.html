@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" type= "text/css" href= "{{ url_for('static',filename='style.css') }}" >
+    <title>Operation Department</title>
+  </head>
+  <body>
+
+        <section class="vh-100" style="background-color: #547cb1;">
+            <div class="container py-5 h-100">
+              <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col col-xl-10">
+                    <div class="card" style="border-radius: 1rem;">
+                        <div class="row g-10">
+                          <div class="col-md-9 col-lg-6 col-xl-5">
+                            <br><br>
+                            <br><br>
+                            <img
+                              src="https://image.freepik.com/free-vector/email-marketing-internet-chatting-24-hours-support_335657-3009.jpg"class="img-fluid"
+                              alt="Sample image"
+                              
+                            />
+                          </div>
+                          <div class="col-md-6 col-lg-7 d-flex align-items-center">
+                            <div class="card-body p-4 p-lg-5 text-black">
+              
+                              <form>
+              
+                                <div class="d-flex align-items-center mb-3 pb-1">
+                                  <i class="fas fa-cubes fa-2x me-3" style="color: #ff6219;"></i>
+                                </div>
+              
+                                <h2 class="fw-normal mb-3 pb-3" style="letter-spacing: 1px;">Contact us</h2>
+              
+                                <div class="row">
+
+                                    <!--Grid column-->
+                                    <div class="col-md-9 mb-md-0 mb-5">
+                                        <form id="contact-form" name="contact-form" action="mail.php" method="POST">
+                            
+                                            <!--Grid row-->
+                                            <div class="row">
+                            
+                                                <!--Grid column-->
+                                                <div class="col-md-12">
+                                                    <div class="md-form mb-0">
+                                                        <input type="text" id="email" name="email" class="form-control"
+                                                      placeholder="Enter a valid email address" /> 
+                                                      <br>
+                                                    </div>
+                                                  </div>
+                                                <!--Grid column-->
+                            
+                                            </div>
+                                            <!--Grid row-->
+                            
+                                            <!--Grid row-->
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="md-form mb-0">
+                                                        <input type="text" id="subject" name="subject" class="form-control"
+                                                        placeholder="Subject" />
+                                                        <br>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--Grid row-->
+                            
+                                            <!--Grid row-->
+                                            <div class="row">
+                            
+                                                <!--Grid column-->
+                                                <div class="col-md-12">
+                            
+                                                    <div class="md-form">
+                                                        <textarea type="text" id="message" name="message" rows="2" class="form-control md-textarea" placeholder="Your message" ></textarea>
+                                                        <br>
+                                                    </div>
+                            
+                                                </div>
+                                            </div>
+              
+                                <div class="pt-1 mb-4">
+                                  <button class="btn btn-dark btn-lg btn-block" type="button">Send</button>
+                                </div>
+                              </form>
+              
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                <!--
+                <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                  <form>
+          
+                     Email input 
+                    <div class="form-outline mb-4">
+                      <input type="email" id="form3Example3" class="form-control form-control-lg"
+                        placeholder="Enter a valid email address" />
+                      <label class="form-label" for="form3Example3">Email address</label>
+                    </div>
+          
+                     Password input 
+                    <div class="form-outline mb-3">
+                      <input type="password" id="form3Example4" class="form-control form-control-lg"
+                        placeholder="Enter password" />
+                      <label class="form-label" for="form3Example4">Password</label>
+                    </div>
+          
+                    <div class="d-flex justify-content-between align-items-center">
+                      Checkbox 
+                      <div class="form-check mb-0">
+                        <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3" />
+                        <label class="form-check-label" for="form2Example3">
+                          Remember me
+                        </label>
+                      </div>
+                      <a href="#!" class="text-body">Forgot password?</a>
+                    </div>
+          
+                    <div class="text-center text-lg-start mt-4 pt-2">
+                      <button type="button" class="btn btn-primary btn-lg"
+                        style="padding-left: 2.5rem; padding-right: 2.5rem;">Login</button>
+                    </div>
+          
+                  </form>
+                </div>
+              </div> -->
+          </section>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  </body>
+</html>
