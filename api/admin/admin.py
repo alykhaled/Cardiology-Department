@@ -24,6 +24,7 @@ def index():
 
     return render_template('adminDashboard.html',data=data)
 
+#Operations
 @adminBp.route('/operations')
 def viewOperations():
     '''
@@ -31,7 +32,15 @@ def viewOperations():
     to view and to add a new operation to the database
     using there api
     '''
-    mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn")
+    search = request.args.get('search')
+    type = request.args.get('type')
+    if type == 'name':
+        mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn WHERE Operation.operationName LIKE '%"+search+"%'")
+    elif type == 'patient':
+        mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn WHERE Patient.name LIKE '%"+search+"%'")
+    else:
+        mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn")
+
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -49,8 +58,25 @@ def addOperations():
     to view and to add a new operation to the database
     using there api
     '''
-
     return render_template("adminAddOperation.html")
+
+#Equipments
+@adminBp.route('/equipment')
+def viewEquipment():
+    '''
+    This is the page that allows the admin
+    to view equipment in a table
+    '''
+
+    mycursor.execute("SELECT * FROM operationsDB.Equipment")
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    data = {
+        'message':"data retrieved",
+        'rec':myresult,
+        'header':row_headers
+    }
+    return render_template("adminViewEquipment.html",data=data)
 
 @adminBp.route('/equipment/add')
 def addEquipment():
@@ -62,6 +88,7 @@ def addEquipment():
 
     return render_template("adminAddEquipment.html")
 
+#Patients
 @adminBp.route('/patients')
 def viewPatient():
     '''
@@ -79,6 +106,14 @@ def viewPatient():
     }
     return render_template("adminViewPatients.html",data=data)
 
+@adminBp.route('/patients/add')
+def addPatients():
+    '''
+    This is the page that allows the admin to view nurses in a table
+    '''
+    return render_template("adminAddPatient.html")
+
+#Nurses
 @adminBp.route('/nurses')
 def viewNurses():
     '''
@@ -103,13 +138,7 @@ def addNurses():
 
     return render_template("adminAddNurse.html")
 
-@adminBp.route('/patients/add')
-def addPatients():
-    '''
-    This is the page that allows the admin to view nurses in a table
-    '''
-    return render_template("adminAddPatient.html")
-
+#Doctors
 @adminBp.route('/doctors')
 def viewDoctors():
     '''
@@ -160,6 +189,7 @@ def addDoctors():
     }
     return render_template("adminAddDoctor.html",data=data)
 
+#Rooms
 @adminBp.route('/rooms')
 def viewRooms():
     '''
@@ -187,20 +217,4 @@ def addRooms():
   
     return render_template("adminAddRooms.html")
   
-@adminBp.route('/equipment')
-def viewEquipment():
-    '''
-    This is the page that allows the admin
-    to view equipment in a table
-    '''
-
-    mycursor.execute("SELECT * FROM operationsDB.Equipment")
-    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
-    myresult = mycursor.fetchall()
-    data = {
-        'message':"data retrieved",
-        'rec':myresult,
-        'header':row_headers
-    }
-    return render_template("adminViewEquipment.html",data=data)
 
