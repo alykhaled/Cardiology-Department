@@ -64,7 +64,7 @@ def viewPatient():
     to view patient in a table
     '''
 
-    mycursor.execute("SELECT ssn,name,phone,currentOperation,illness,bdate FROM operationsDB.Patient")
+    mycursor.execute("SELECT ssn,name,medicalHistory,illness,bdate,phone,username,password,email,currentOperation,address,gender,Relatives_phone_Number FROM operationsDB.Patient")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {

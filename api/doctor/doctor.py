@@ -28,7 +28,7 @@ def viewOperations():
     to view and to add a new operation to the database
     using there api
     '''
-    mycursor.execute("SELECT * FROM operationsDB.Patient")
+    mycursor.execute("SELECT * FROM operationsDB.Operation")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -54,7 +54,7 @@ def viewPatients():
     to view patients in a table
     '''
 
-    mycursor.execute("SELECT * FROM operationsDB.Patient")
+    mycursor.execute("SELECT ssn,name,medicalHistory,illness,bdate,phone,username,password,email,currentOperation,address,gender,Relatives_phone_Number FROM operationsDB.Patient")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -71,7 +71,7 @@ def viewNurses():
     to view nurses in a table
     '''
 
-    mycursor.execute("SELECT * FROM operationsDB.Patient")
+    mycursor.execute("SELECT * FROM operationsDB.Nurse")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -88,7 +88,7 @@ def viewRooms():
     to view rooms in a table
     '''
 
-    mycursor.execute("SELECT * FROM operationsDB.Patient")
+    mycursor.execute("SELECT * FROM operationsDB.`Operation Room`;")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
