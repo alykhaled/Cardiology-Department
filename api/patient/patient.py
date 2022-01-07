@@ -29,12 +29,11 @@ def addPatient():
         username = request.form['username']
         password = request.form['password']
         email = request.form['email']
-        currentOperation = request.form['currentOperation']
         address = request.form['address']
         gender = request.form['gender']
         Relatives_phone_Number = request.form['Relatives_phone_Number']
-        sql = "INSERT INTO `operationsDB`.`Patient` (`ssn`,`name`,`medicalHistory`,`illness`,`bdate`,`phone`,`image`,`username`,`password`,`email`,`currentOperation`,`address`,`gender`,`Relatives_phone_Number`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"
-        val = (ssn,name,medicalHistory,illness,bdate,phone,image.read(),username,password,email,currentOperation,address,gender,Relatives_phone_Number)
+        sql = "INSERT INTO `operationsDB`.`Patient` (`ssn`,`name`,`medicalHistory`,`illness`,`bdate`,`phone`,`image`,`username`,`password`,`email`,`address`,`gender`,`Relatives_phone_Number`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"
+        val = (ssn,name,medicalHistory,illness,bdate,phone,image.read(),username,password,email,address,gender,Relatives_phone_Number)
         mycursor.execute(sql,val)
         mydb.commit()
 
