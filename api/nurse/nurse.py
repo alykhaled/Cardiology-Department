@@ -24,7 +24,6 @@ def addNurse():
         password = request.form['password']
         ssn = request.form['ssn']
         SuperSSN = request.form['SuperSSN']
-        cOperation=request.form['cOperation']
         biography = request.form['biography']
         gender = request.form['gender']
         birthdate = request.form['birthdate']
@@ -32,12 +31,11 @@ def addNurse():
         address = request.form['address']
         image = request.files['image']
         salary=request.form['Salary']
-        sql = "INSERT INTO `operationsDB`.`Nurse` (`ssn`, `name`, `birthdate`, `address`, `currentOperation`, `superSsn`, `salary`, `biography`, `phone`, `gender`,`username`,`email`,`password`,`image`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"
-        val = (ssn,name,birthdate,address,cOperation,SuperSSN,salary,biography,phone,gender,username,email,password,image.read())
+        sql = "INSERT INTO `operationsDB`.`Nurse` (`ssn`, `name`, `birthdate`, `address`, `superSsn`, `salary`, `biography`, `phone`, `gender`,`username`,`email`,`password`,`image`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"
+        val = (ssn,name,birthdate,address,SuperSSN,salary,biography,phone,gender,username,email,password,image.read())
         mycursor.execute(sql,val)
         mydb.commit()
 
-        print(name,username,password,biography,phone,email,gender,birthdate,ssn,address,image.read()) 
     return redirect(url_for('adminBp.viewNurses'))
 
 @nurseBp.route('/update' ,methods=['POST'])
