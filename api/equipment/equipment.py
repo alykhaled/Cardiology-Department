@@ -21,12 +21,11 @@ def addEquipment():
     '''
     if request.method == 'POST':
         Equipment_Name = request.form['Equipment_Name']
-        Equipment_ID = request.form['Equipment_ID']
         Eq_room = request.form['Eq_Room']
         EquipmentModel = request.form['Equipment_Model']
         Eq_Admission_date = request.form['Eq_Admission_date']
-        sql = "INSERT INTO `operationsDB`.`Equipment` (`Equipment_Name`, `Equipment_ID`, `Eq_Room`, `Equipment_Model`, `Eq_Admission_date`) VALUES (%s,%s,%s,%s,%s);"
-        val = (Equipment_Name,Equipment_ID,Eq_room,EquipmentModel,Eq_Admission_date)
+        sql = "INSERT INTO `operationsDB`.`Equipment` (`Equipment_Name`, `Eq_Room`, `Equipment_Model`, `Eq_Admission_date`) VALUES (%s,%s,%s,%s);"
+        val = (Equipment_Name,Eq_room,EquipmentModel,Eq_Admission_date)
         mycursor.execute(sql,val)
         mydb.commit()
 

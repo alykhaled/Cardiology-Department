@@ -3,6 +3,15 @@
     <h3>View Equipment</h3>
     <div class="row">
       <h5 class="align-self-center col" >Total of {{data.rec|count}} Equipment</h5>
+      <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+        <select class="form-select col m-3" name="type" aria-label="Default select example">
+          <option selected value="id" name="type">Search by ID</option>
+          <option value="name" name="type">Search by Name</option>
+          <option value="room" name="type">Search by Room ID</option>
+        </select>
+      </form>
       <div class="text-right p-4 col">
         <a href="http://127.0.0.1:5000/admin/equipment/add" class="btn btn-primary align-self-center">Add Equipment</a>
       </div> 

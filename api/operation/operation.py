@@ -18,7 +18,6 @@ mycursor = mydb.cursor()
 def addOperation():
     #TODO
     if request.method == 'POST':
-        id = request.form['id']
         operationName = request.form['operationName']
         patientId = request.form['patientId']
         doctorId = request.form['doctorId']
@@ -26,19 +25,13 @@ def addOperation():
         date = request.form['date']
         startTime = request.form['startTime']
         endTime = request.form['endTime']
-        sql = "INSERT INTO `operationsDB`.`Operation` (`id`,`operationName`,`patientId`,`doctorId`,`roomId`,`date`,`startTime`,`endTime`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s);"
-        val = (id,operationName,patientId,doctorId,roomId,date,startTime,endTime)
+        sql = "INSERT INTO `operationsDB`.`Operation` (`operationName`,`patientId`,`doctorId`,`roomId`,`date`,`startTime`,`endTime`) VALUES (%s,%s,%s,%s,%s,%s,%s);"
+        val = (operationName,patientId,doctorId,roomId,date,startTime,endTime)
         mycursor.execute(sql,val)
         mydb.commit()
         # print(id,operationName,patientId,doctorId,roomId,date,startTime,endTime)
     return redirect(url_for('adminBp.viewOperations'))
 
-
-@operationBp.route('/get' ,methods=['GET'])
-def getOperation():
-    #TODO
-    #     
-    return("Test")
 
 @operationBp.route('/update' ,methods=['POST'])
 def updateOperation():

@@ -19,13 +19,12 @@ mycursor = mydb.cursor()
 def addRoom():
     #TODO
     if request.method == 'POST':
-        Operation_Room_ID = request.form['Operation_Room_ID']
         Room_Location = request.form['Room_Location']
-        sql = "INSERT INTO `operationsDB`.`Operation Room` (`Operation_Room_ID`,`Room_Location`) VALUES (%s,%s);"
-        val = (Operation_Room_ID,Room_Location)
-        mycursor.execute(sql,val)
+        sql = "INSERT INTO `operationsDB`.`Operation Room` (`Room_Location`) VALUES ('"+Room_Location+"')"
+        print(sql)
+        val = (Room_Location)
+        mycursor.execute(sql)
         mydb.commit()
-        print(Operation_Room_ID,Room_Location)
 
     return render_template("adminAddRooms.html")
 

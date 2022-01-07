@@ -2,16 +2,9 @@
 {% block head %}
     <h3>Add Equipment</h3>
     <form action="http://localhost:5000/equipment/add" method="POST" enctype="multipart/form-data">
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="name">Equipment_Name</label>
-            <input type="text" class="form-control" id="Equipment_Name" name="Equipment_Name" placeholder="Equipment_Name">
-          </div>
-          
-        </div>
         <div class="form-group">
-            <label for="ssn">Equipment_ID</label>
-            <input type="text" class="form-control" id="Equipment_ID" name="Equipment_ID" >
+          <label for="name">Equipment_Name</label>
+          <input type="text" class="form-control" id="Equipment_Name" name="Equipment_Name" placeholder="Equipment_Name">
         </div>
         <div class="form-group">
             <label for="ssn">Eq_Room</label>
@@ -26,9 +19,7 @@
           <label for="Eq_Admission_date">Eq_Admission_date</label>
           <input type="date" class="form-control" id="Eq_Admission_date" name="Eq_Admission_date" >
         </div>
-
-        
         
         <button type="submit" class="btn btn-primary">Add Equipment</button>
     </form>
-    {% endblock %}
+{% endblock %}

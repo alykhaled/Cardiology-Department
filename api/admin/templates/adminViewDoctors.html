@@ -3,9 +3,13 @@
     <h3>View Doctors</h3>
     <div class="row">
       <h5 class="align-self-center col" >Total of {{data.rec|count}} Doctors</h5>
+      <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>   
       <div class="text-right p-4 col">
         <a href="http://127.0.0.1:5000/admin/doctors/add" class="btn btn-primary align-self-center">Add Doctor</a>
-      </div>     
+      </div>  
     </div>
     <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
       {% for r in data.rec %}

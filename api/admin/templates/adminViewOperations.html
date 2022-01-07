@@ -6,16 +6,12 @@
       <form class="form-inline">
         <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        <div class="col">
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="type" id="gridRadios1" value="name">
-            <label class="form-check-label" for="gridRadios1">Search by Name</label>
-          </div>
-          <div class="form-check">
-            <input class="form-check-input" type="radio" name="type" id="gridRadios2" value="patient">
-            <label class="form-check-label" for="gridRadios2">Search by Patient ID</label>
-          </div>
-        </div>
+        <select class="form-select col m-3" name="type" aria-label="Default select example">
+          <option selected value="id" name="type">Search by ID</option>
+          <option value="name" name="type">Search by Name</option>
+          <option value="patient" name="type">Search by Patient Name</option>
+          <option value="doctor" name="type">Search by Doctor Name</option>
+        </select>
       </form>
       <div class="text-right p-4 col">
         <a href="http://127.0.0.1:5000/admin/operations/add" class="btn btn-primary align-self-center">Add Operation</a>
@@ -25,7 +21,7 @@
           
     </div>
 
-    <table class="table">
+    <table class="table table table-bordered">
       <thead>
         <tr>
           <th scope="col">#</th>
