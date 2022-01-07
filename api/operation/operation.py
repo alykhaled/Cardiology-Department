@@ -29,7 +29,6 @@ def addOperation():
         val = (operationName,patientId,doctorId,roomId,date,startTime,endTime)
         mycursor.execute(sql,val)
         mydb.commit()
-        # print(id,operationName,patientId,doctorId,roomId,date,startTime,endTime)
     return redirect(url_for('adminBp.viewOperations'))
 
 

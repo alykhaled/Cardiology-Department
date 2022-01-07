@@ -1,0 +1,43 @@
+{% extends "nurseIndex.html" %}
+{% block head %}  
+    <h3 class="px-3">View Operations</h3>
+    <nav class="navbar navbar-light">
+      <h5 class="align-self-center col p-0" >Total of {{data.rec|count}} operations</h5>
+      <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <select class="form-select col m-3" name="type" aria-label="Default select example">
+          <option selected value="id" name="type">Search by ID</option>
+          <option value="name" name="type">Search by Name</option>
+          <option value="patient" name="type">Search by Patient Name</option>
+          <option value="doctor" name="type">Search by Doctor Name</option>
+        </select>
+      </form>
+    </nav>
+    <div class="row">
+          
+    </div>
+
+    <table class="table table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          {% for r in data.header %}
+          <th>{{r}}</th>
+          {% endfor %} 
+        </tr>
+      </thead>
+      <tbody>
+         {% for r in data.rec %}
+         <tr>
+            <th>{{loop.index}} </th>
+            {% for l in r %}
+              <td> {{l}}</td>
+            {% endfor %}
+         </tr>
+         {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

@@ -14,6 +14,69 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 mydb.autocommit = True
 
+@nurseBp.route('/')
+def nurseIndex():
+    '''
+    This is the index page for the doctor that view some statics about latest
+    operations and patients that are
+    waiting for a doctor
+    '''
+
+    return render_template("nurseIndex.html")
+
+@nurseBp.route('/operations')
+def viewOperations():
+    '''
+    This is the page that allows the doctor
+    to view and to add a new operation to the database
+    using there api
+    '''
+    mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn")
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    data = {
+        'message':"data retrieved",
+        'rec':myresult,
+        'header':row_headers
+    }
+    return render_template("nurseViewOperations.html",data=data)
+
+@nurseBp.route('/patients')
+def viewPatients():
+    '''
+    This is the page that allows the doctor
+    to view patients in a table
+    '''
+
+    mycursor.execute("SELECT ssn as SSN,name as Name ,phone as 'Phone Number',illness as Illness,2022-YEAR(bdate) as AGE FROM operationsDB.Patient")
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    data = {
+        'message':"data retrieved",
+        'rec':myresult,
+        'header':row_headers
+    }
+    return render_template("nurseViewPatients.html",data=data)
+
+
+@nurseBp.route('/rooms')
+def viewRooms():
+    '''
+    This is the page that allows the doctor
+    to view rooms in a table
+    '''
+
+    mycursor.execute("SELECT * FROM operationsDB.`Operation Room`;")
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    data = {
+        'message':"data retrieved",
+        'rec':myresult,
+        'header':row_headers
+    }
+    return render_template("nurseViewRooms.html",data=data)
+
+
 @nurseBp.route('/add' ,methods=['POST'])
 def addNurse():
      
