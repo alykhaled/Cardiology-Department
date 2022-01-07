@@ -120,7 +120,7 @@ def viewNurses():
     This is the page that allows the admin to view nurses in a table
     '''
 
-    mycursor.execute("SELECT name,birthdate,address,currentOperation,superSsn,salary,biography,phone,gender FROM operationsDB.Nurse")
+    mycursor.execute("SELECT ssn,name,birthdate,address,currentOperation,superSsn,salary,biography,phone,gender FROM operationsDB.Nurse")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
