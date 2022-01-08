@@ -1,5 +1,6 @@
-from flask import Flask,Blueprint, redirect, url_for, request,render_template
+from flask import Flask,Blueprint, redirect, url_for, request,render_template, send_file
 import mysql.connector
+from io import BytesIO
 
 mydb = mysql.connector.connect(
     host='34.71.50.183',
@@ -50,6 +51,7 @@ def viewOperations():
         'header':row_headers
     }
     return render_template("patientViewOperations.html",data=data)
+
 @patientBp.route('/add' ,methods=['POST'])
 def addPatient():
     #TODO
@@ -74,6 +76,13 @@ def addPatient():
 
     return redirect(url_for('adminBp.viewPatient'))
 
+@patientBp.route('/download/<fileId>')
+def downloadFile(fileId):
+    #TODO
+    mycursor.execute("SELECT id ,name, extension, data FROM File WHERE File.id = "+str(fileId))
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    file_data = mycursor.fetchall()[0]
+    return send_file(BytesIO(file_data[3]),attachment_filename=file_data[1], as_attachment=True)
 
 @patientBp.route('/update' ,methods=['POST'])
 def updatePatient():
