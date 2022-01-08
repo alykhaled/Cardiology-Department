@@ -30,8 +30,9 @@
         {% for r in data.rec %}
         <tr>
            <th>{{loop.index}} </th>
-           {% for l in r %}
-             <td> {{l}}</td>
+           <td><a href="patient/{{r[0]}}"> {{r[0]}}</a></td>
+           {% for l in r[1:] %}
+             <td>{{l}}</td>
            {% endfor %}
            <td>
              <div class="text-right col">
