@@ -3,6 +3,10 @@
     <h3>View Nurses</h3>
     <div class="row">
       <h5 class="align-self-center col" >Total of {{data.rec|count}} Nurses</h5>
+      <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>   
       <div class="text-right p-4 col">
         <a href="http://127.0.0.1:5000/admin/nurses/add" class="btn btn-primary align-self-center">Add Nurse</a>
       </div> 
@@ -15,9 +19,9 @@
           <img class="card-img-top" style="object-fit: cover; height: 270px;" src="data:;base64,{{ r[3] }}" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title text-center">{{r[0]}}</h5>
-            <p class="card-text">{{r[2]}}</p>
+            <p class="card-text" style="overflow: hidden;">{{r[2]}}</p>
             <p class="card-text">{{r[1]}}</p>
-            <a href="http://localhost:5000/admin/doctors/{{r[4]}}" class="btn btn-primary text-center">Open Profile</a>
+            <a href="http://localhost:5000/admin/nurses/{{r[4]}}" class="btn btn-primary text-center">Open Profile</a>
           </div>
         </div>
       </div>

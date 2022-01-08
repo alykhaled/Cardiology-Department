@@ -6,7 +6,7 @@
       google.charts.setOnLoadCallback(drawChart);
       function drawChart() {
         var data = google.visualization.arrayToDataTable([
-        {% for key, value in data.items() %}
+        {% for key, value in patients.items() %}
           {% if value is string %}
             ['{{ key }}', '{{ value }}'],
           {% else %}
@@ -16,16 +16,33 @@
         ]);
 
         var options = {
-          title: 'Gender',
+          title: 'Patients Gender',
+          is3D: false,
+        };
+        
+        var dataNurses = google.visualization.arrayToDataTable([
+        {% for key, value in nurses.items() %}
+          {% if value is string %}
+            ['{{ key }}', '{{ value }}'],
+          {% else %}
+            ['{{ key }}', {{ value }}],
+          {% endif %}
+        {% endfor %}
+        ]);
+
+        var optionsNurses = {
+          title: 'Nurses Gender',
           is3D: false,
         };
 
-        var chart = new google.visualization.PieChart(document.getElementById('piechart_3d'));
+        var chart = new google.visualization.PieChart(document.getElementById('patientsChart'));
+        var chart1 = new google.visualization.PieChart(document.getElementById('nursesChart'));
         chart.draw(data, options);
+        chart1.draw(dataNurses, optionsNurses);
       }
     </script>
     <h3>Welcome</h3>
     <h3>Statistical Analysis</h3>
-    <div id="piechart_3d" style=" height: 500px;"></div>
-    <div id="piechart_3d1" style=" height: 500px;"></div>
+    <div id="patientsChart" style=" height: 500px;"></div>
+    <div id="nursesChart" style=" height: 500px;"></div>
 {% endblock %}

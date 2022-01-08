@@ -20,9 +20,16 @@ def index():
     femalesNum = mycursor.fetchall();
     mycursor.execute("SELECT COUNT(ssn) FROM operationsDB.Patient WHERE gender='male';")
     malesNum = mycursor.fetchall();
-    data = {'Task' : 'Hours per Day', 'Male' : malesNum[0][0], 'Female' : femalesNum[0][0]}
+    
+    mycursor.execute("SELECT COUNT(ssn) FROM operationsDB.Nurse WHERE gender='female';")
+    femalesNurses = mycursor.fetchall();
+    mycursor.execute("SELECT COUNT(ssn) FROM operationsDB.Nurse WHERE gender='male';")
+    malesNurses = mycursor.fetchall();
 
-    return render_template('adminDashboard.html',data=data)
+    dataPatient = {'Task' : 'Hours per Day', 'Male' : malesNum[0][0], 'Female' : femalesNum[0][0]}
+    dataNurses = {'Task' : 'Hours per Day', 'Male' : malesNurses[0][0], 'Female' : femalesNurses[0][0]}
+
+    return render_template('adminDashboard.html',patients=dataPatient,nurses=dataNurses)
 
 #Operations
 @adminBp.route('/operations')
@@ -124,9 +131,11 @@ def viewNurses():
     This is the page that allows the admin to view nurses in a table
     '''
 
-    mycursor.execute("SELECT ssn,name,birthdate,address,superSsn,salary,biography,phone,gender FROM operationsDB.Nurse")
+    mycursor.execute("SELECT name,biography,email,image,ssn FROM operationsDB.Nurse")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
+    myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4]) for r in myresult]
+
     data = {
         'message':"data retrieved",
         'rec':myresult,

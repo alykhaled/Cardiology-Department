@@ -1,5 +1,6 @@
 from flask import Flask,Blueprint, redirect, url_for, request,render_template
 import mysql.connector
+from psycopg2.extensions import AsIs
 
 # mycursor = mydb.cursor()
 
@@ -58,7 +59,6 @@ def viewPatients():
     }
     return render_template("nurseViewPatients.html",data=data)
 
-
 @nurseBp.route('/rooms')
 def viewRooms():
     '''
@@ -75,7 +75,6 @@ def viewRooms():
         'header':row_headers
     }
     return render_template("nurseViewRooms.html",data=data)
-
 
 @nurseBp.route('/add' ,methods=['POST'])
 def addNurse():
@@ -94,8 +93,12 @@ def addNurse():
         address = request.form['address']
         image = request.files['image']
         salary=request.form['Salary']
-        sql = "INSERT INTO `operationsDB`.`Nurse` (`ssn`, `name`, `birthdate`, `address`, `superSsn`, `salary`, `biography`, `phone`, `gender`,`username`,`email`,`password`,`image`) VALUES (%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s);"
-        val = (ssn,name,birthdate,address,SuperSSN,salary,biography,phone,gender,username,email,password,image.read())
+        if SuperSSN == '':
+            SuperSSN = 'NULL'
+            
+        sql = "INSERT INTO `operationsDB`.`Nurse` (`ssn`, `name`, `birthdate`, `address`, `superSsn`, `salary`, `biography`, `phone`, `gender`,`username`,`email`,`password`,`image`) VALUES (%s,%s,%s,%s,"+SuperSSN+",%s,%s,%s,%s,%s,%s,%s,%s);"
+        
+        val = (ssn,name,birthdate,address,salary,biography,phone,gender,username,email,password,image.read())
         mycursor.execute(sql,val)
         mydb.commit()
 
