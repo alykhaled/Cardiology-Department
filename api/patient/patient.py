@@ -15,6 +15,33 @@ mydb.autocommit = True
 patientBp = Blueprint('patientBp', __name__, template_folder='templates',static_folder='static')
 
 mycursor = mydb.cursor()
+
+@patientBp.route('/')
+def patientIndex():
+    '''
+    This is the index page for the patient that view some statics about latest
+    operations and patients that are
+    waiting for a patient
+    '''
+
+    return render_template("patientIndex.html")
+
+@patientBp.route('/operations')
+def viewOperations():
+    '''
+    This is the page that allows the patient
+    to view and to add a new operation to the database
+    using there api
+    '''
+    mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn")
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    data = {
+        'message':"data retrieved",
+        'rec':myresult,
+        'header':row_headers
+    }
+    return render_template("doctorViewOperations.html",data=data)
 @patientBp.route('/add' ,methods=['POST'])
 def addPatient():
     #TODO
