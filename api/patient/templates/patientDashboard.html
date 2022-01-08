@@ -1,0 +1,32 @@
+{% extends "patientIndex.html" %}
+{% block head %}  
+    <h3 class="">Welcome</h3>
+    <h5>Your recent Files</h5>
+    <table class="table table table-bordered">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          {% for r in data.header[:3] %}
+          <th>{{r}}</th>
+          {% endfor %} 
+        </tr>
+      </thead>
+      <tbody>
+         {% for r in data.rec %}
+         <tr>
+            <th>{{loop.index}} </th>
+            {% for l in r[:3] %}
+              <td> {{l}}</td>
+            {% endfor %}
+            <td>
+              <div class="text-right col">
+                <a href="http://127.0.0.1:5000/" class="btn btn-primary align-self-center">Download</a>
+              </div>  
+            </td>
+         </tr>
+         {% endfor %}
+        </tbody>
+    </table>
+
+
+{% endblock %}

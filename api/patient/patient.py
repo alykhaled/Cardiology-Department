@@ -23,8 +23,16 @@ def patientIndex():
     operations and patients that are
     waiting for a patient
     '''
+    mycursor.execute("SELECT id,File.name as 'File Name' , Doctor.name as 'Doctor Name', data FROM operationsDB.File Join Doctor ON doctorId = Doctor.ssn Where patientId = "+str(1190156)+";")
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    data = {
+        'message':"data retrieved",
+        'rec':myresult,
+        'header':row_headers
+    }
 
-    return render_template("patientIndex.html")
+    return render_template("patientDashboard.html",data=data)
 
 @patientBp.route('/operations')
 def viewOperations():
@@ -33,7 +41,7 @@ def viewOperations():
     to view and to add a new operation to the database
     using there api
     '''
-    mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn")
+    mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn WHERE Patient.ssn = "+str(1190156))
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -41,7 +49,7 @@ def viewOperations():
         'rec':myresult,
         'header':row_headers
     }
-    return render_template("doctorViewOperations.html",data=data)
+    return render_template("patientViewOperations.html",data=data)
 @patientBp.route('/add' ,methods=['POST'])
 def addPatient():
     #TODO

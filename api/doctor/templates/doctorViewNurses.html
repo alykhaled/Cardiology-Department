@@ -3,28 +3,30 @@
     <h3>View Nurses</h3>
     <div class="row">
       <h5 class="align-self-center col" >Total of {{data.rec|count}} Nurses</h5>
+      <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+      </form>   
+      <div class="text-right p-4 col">
+        <a href="http://127.0.0.1:5000/admin/nurses/add" class="btn btn-primary align-self-center">Add Nurse</a>
+      </div> 
     </div>
 
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          {% for r in data.header %}
-          <th>{{r}}</th>
-          {% endfor %} 
-        </tr>
-      </thead>
-      <tbody>
-         {% for r in data.rec %}
-         <tr>
-            <th>{{loop.index}} </th>
-            {% for l in r %}
-              <td> {{l}}</td>
-            {% endfor %}
-         </tr>
-         {% endfor %}
-        </tbody>
-    </table>
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+      {% for r in data.rec %}
+      <div class="col mb-4">
+        <div class="card " style="width: 20rem; ">
+          <img class="card-img-top" style="object-fit: cover; height: 270px;" src="data:;base64,{{ r[3] }}" alt="Card image cap">
+          <div class="card-body">
+            <h5 class="card-title text-center">{{r[0]}}</h5>
+            <p class="card-text" style="overflow: hidden;">{{r[2]}}</p>
+            <p class="card-text">{{r[1]}}</p>
+            <a href="http://localhost:5000/doctor/nurses/{{r[4]}}" class="btn btn-primary text-center">Open Profile</a>
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
 
 
 {% endblock %}
