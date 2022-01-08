@@ -103,11 +103,33 @@ def addNurse():
 
     return redirect(url_for('adminBp.viewNurses'))
 
-@nurseBp.route('/update' ,methods=['POST'])
-def updateNurse():
-    #TODO
-    #     
-    return("Test")
+@nurseBp.route('/update/<ssn>' ,methods=['POST', 'GET'])
+def updateNurse(ssn):
+
+    if request.method == 'POST':
+        name = request.form['name']
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+        ssn = request.form['ssn']
+        SuperSSN = request.form['SuperSSN']
+        biography = request.form['biography']
+        gender = request.form['gender']
+        birthdate = request.form['birthdate']
+        phone = request.form['phone']
+        address = request.form['address']
+        image = request.files['image']
+        salary=request.form['Salary']
+        if SuperSSN == '':
+            SuperSSN = 'NULL'
+
+        sql = "UPDATE `operationsDB`.`Nurse` SET ssn=%s,name=%s,birthdate=%s,address=%s,superSsn="+SuperSSN+",salary=%s,biography=%s,phone=%s,gender=%s,username=%s,email=%s,password=%s,image=%s WHERE ssn="+ssn
+        
+        val = (ssn,name,birthdate,address,salary,biography,phone,gender,username,email,password,image.read())
+        mycursor.execute(sql,val)
+        mydb.commit()
+
+    return redirect(url_for('adminBp.viewNurses'))
 
 @nurseBp.route('/delete/<ssn>' ,methods=['GET'])
 def deleteNurse(ssn):

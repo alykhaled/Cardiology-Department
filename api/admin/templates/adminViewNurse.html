@@ -26,6 +26,15 @@
                 <p class="px-md-4">{{data[0][6]}}</p>
                 <h4 class="px-md-4">Address</h4>
                 <p class="px-md-4">{{data[0][7]}}</p>
+                <h4 class="px-md-4">Operations</h4>
+                <form action="http://localhost:5000/room/add" method="POST" enctype="multipart/form-data"">
+                    <div class="row px-4">
+                        <div class="input-group col-8 ">
+                            <input type="text" class="form-control" id="OperationID" name="OperationID" placeholder="Add Operation ID">
+                        </div>
+                        <button type="submit" class="btn btn-primary col ">Send</button>
+                    </div>
+                </form>
             </div>
 
         </div>
@@ -33,8 +42,8 @@
             <div class="col-md-6 col-sm-12">
             </div>
             <div class="col-md-6 col-sm-12">
-                <a href="http://127.0.0.1:5000/" class="btn btn-primary align-self-center">Edit</a>
-                <a href="http://127.0.0.1:5000/doctor/delete/{{data[0][8]}}" class="btn btn-primary align-self-center">Delete</a>
+                <a href="http://127.0.0.1:5000/admin/nurses/update/{{data[0][8]}}" class="btn btn-primary align-self-center">Edit</a>
+                <a href="http://127.0.0.1:5000/admin/delete/{{data[0][8]}}" class="btn btn-primary align-self-center">Delete</a>
             </div>
         </div>
     </div>

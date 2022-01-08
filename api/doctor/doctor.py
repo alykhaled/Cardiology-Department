@@ -173,13 +173,30 @@ def addFile(patient_id):
         # print(name,username,password,biography,phone,email,gender,birthdate,ssn,address,image.read())
 
     return render_template("adminAddDoctor.html")
-@doctorBp.route('/update' ,methods=['PUT'])
-def updateDoctor():
-    '''
-    This is update PUT request for the doctor
-    that update a doctor in the database
-    '''    
-    return("Test")
+
+@doctorBp.route('/update/<ssn>' ,methods=['POST', 'GET'])
+def updateDoctor(ssn):
+
+    if request.method == 'POST':
+        name = request.form['name']
+        username = request.form['username']
+        email = request.form['email']
+        password = request.form['password']
+        ssn = request.form['ssn']
+        biography = request.form['biography']
+        gender = request.form['gender']
+        birthdate = request.form['birthdate']
+        phoneNumber = request.form['phone']
+        address = request.form['address']
+        image = request.files['image']
+
+        sql = "UPDATE `operationsDB`.`Doctor` SET ssn=%s,name=%s,birthdate=%s,address=%s,biography=%s,phoneNumber=%s,gender=%s,username=%s,email=%s,password=%s,image=%s WHERE ssn="+ssn
+        
+        val = (ssn,name,birthdate,address,biography,phoneNumber,gender,username,email,password,image.read())
+        mycursor.execute(sql,val)
+        mydb.commit()
+
+    return redirect(url_for('adminBp.viewDoctors'))
 
 @doctorBp.route('/delete/<ssn>' ,methods=['GET'])
 def deleteDoctor(ssn):
