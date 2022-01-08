@@ -28,16 +28,18 @@
                 <p class="px-md-4">{{data[0][7]}}</p>
                 <h4 class="px-md-4">Illness</h4>
                 <p class="px-md-4">{{data[0][8]}}</p>
+                <h4 class="px-md-4">Send File to patient</h4>
+                <form action="">
+                    <div class="row px-4">
+                        <div class="input-group   col-8 ">
+                            <input type="file" class="form-control" id="inputGroupFile02" name="image">
+                            <label class="input-group-text" for="inputGroupFile02">Upload</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary col ">Send</button>
+                    </div>
+                </form>
             </div>
 
-        </div>
-        <div class="row">
-            <div class="col-md-6 col-sm-12">
-            </div>
-            <div class="col-md-6 col-sm-12">
-                <a href="http://127.0.0.1:5000/" class="btn btn-primary align-self-center">Edit</a>
-                <a href="http://127.0.0.1:5000/doctor/delete/{{data[0][8]}}" class="btn btn-primary align-self-center">Delete</a>
-            </div>
         </div>
     </div>
 {% endblock %}

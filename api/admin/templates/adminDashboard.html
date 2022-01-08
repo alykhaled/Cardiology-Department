@@ -19,7 +19,12 @@
           title: 'Patients Gender',
           is3D: false,
         };
-        
+        var chart = new google.visualization.PieChart(document.getElementById('patientsChart'));
+
+        chart.draw(data, options);
+
+        /*============================================*/
+        /*Data Nurse*/
         var dataNurses = google.visualization.arrayToDataTable([
         {% for key, value in nurses.items() %}
           {% if value is string %}
@@ -35,14 +40,33 @@
           is3D: false,
         };
 
-        var chart = new google.visualization.PieChart(document.getElementById('patientsChart'));
         var chart1 = new google.visualization.PieChart(document.getElementById('nursesChart'));
-        chart.draw(data, options);
         chart1.draw(dataNurses, optionsNurses);
+
+        /*============================================*/
+        var dataOperations = google.visualization.arrayToDataTable([
+        {% for key, value in operations.items() %}
+          {% if value is string %}
+            ['{{ key }}', '{{ value }}'],
+          {% else %}
+            ['{{ key }}', {{ value }}],
+          {% endif %}
+        {% endfor %}
+        ]);
+        
+ 
+        var optionsOperations = {
+          title: 'Operations Month',
+          is3D: false,
+        };
+        
+        var chartOperations = new google.visualization.ColumnChart(document.getElementById('operationsChart'));
+        chartOperations.draw(dataOperations, optionsOperations);
       }
     </script>
     <h3>Welcome</h3>
     <h3>Statistical Analysis</h3>
+    <div id="operationsChart" style=" height: 500px;"></div>
     <div id="patientsChart" style=" height: 500px;"></div>
     <div id="nursesChart" style=" height: 500px;"></div>
 {% endblock %}

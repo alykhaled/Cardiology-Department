@@ -1,5 +1,6 @@
 from flask import Flask,Blueprint, redirect, url_for, request,render_template
 import mysql.connector
+from base64 import b64encode
 
 # mycursor = mydb.cursor()
 mydb = mysql.connector.connect(
@@ -63,6 +64,20 @@ def viewPatients():
         'header':row_headers
     }
     return render_template("doctorViewPatients.html",data=data)
+
+@doctorBp.route('/patients/<patient_id>')
+def viewPatient(patient_id):
+    '''
+    This is the page that allows the admin to view one patient page
+    '''
+    mycursor.execute("SELECT name,medicalHistory,email,image,phone,gender,bdate,address,ssn,illness,Relatives_phone_Number FROM operationsDB.Patient WHERE ssn="+ patient_id)
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    
+    # tesst = b64encode(myresult[0][3])
+    myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4],r[5],r[6],r[7],r[8],r[9],r[10]) for r in myresult]
+
+    return render_template("doctorViewPatient.html",data=myresult)
 
 @doctorBp.route('/nurses')
 def viewNurses():
