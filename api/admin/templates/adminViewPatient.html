@@ -1,0 +1,36 @@
+{% extends "index.html" %}
+{% block head %}
+    <h2>{{data[0][0]}}</h2>
+    <div class="card" style="border-radius: 10px;">
+        <div class="row p-md-4">
+            <img class="col-md-4 col-sm-12 doctorImage"  src="data:;base64,{{ data[0][3] }}" alt="Cat">
+            <div class="pl-sm-4 col-md-8 col-sm-12 ">
+                <h3>Medical History</h3>
+                <p>{{data[0][1]}}</p>
+            </div>
+        </div>
+        <div class="row  pl-4">
+            <div class="col-md-6 col-sm-12">
+                <h3 class="px-md-4">Personal Information</h3>
+                <h4 class="px-md-4">SSN</h4>
+                <p class="px-md-4">{{data[0][8]}}</p>
+                <h4 class="px-md-4">Phone Number</h4>
+                <p class="px-md-4">{{data[0][4]}}</p>
+                <h4 class="px-md-4">Relative Phone Number</h4>
+                <p class="px-md-4">{{data[0][10]}}</p>
+                <h4 class="px-md-4">Email</h4>
+                <p class="px-md-4">{{data[0][2]}}</p>
+                <h4 class="px-md-4">Gender</h4>
+                <p class="px-md-4">{{data[0][5]}}</p>
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <h4 class="px-md-4">Birthdate</h4>
+                <p class="px-md-4">{{data[0][6]}}</p>
+                <h4 class="px-md-4">Address</h4>
+                <p class="px-md-4">{{data[0][7]}}</p>
+                <h4 class="px-md-4">Illness</h4>
+                <p class="px-md-4">{{data[0][9]}}</p>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -19,8 +19,8 @@ ul {
 }
 
 .menuBtn {
-  margin-left: 10px;
   padding: 5px;
+  padding-left: 0;
 }
 
 @media (min-width: 780px) {

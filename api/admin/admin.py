@@ -11,7 +11,6 @@ mydb = mysql.connector.connect(
     database="operationsDB",autocommit=True
 )
 mydb.autocommit = True
-
 mycursor = mydb.cursor()
 
 @adminBp.route('/')
@@ -124,6 +123,21 @@ def addPatients():
     '''
     return render_template("adminAddPatient.html")
 
+@adminBp.route('/patients/<patient_id>')
+def viewpatient(patient_id):
+    '''
+    This is the page that allows the admin to view one patient page
+    '''
+
+    mycursor.execute("SELECT name,medicalHistory,email,image,phone,gender,bdate,address,ssn,illness,Relatives_phone_Number FROM operationsDB.Patient WHERE ssn="+ patient_id)
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    
+    # tesst = b64encode(myresult[0][3])
+    myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4],r[5],r[6],r[7],r[8],r[9],r[10]) for r in myresult]
+
+    return render_template("adminViewPatient.html",data=myresult)
+
 #Nurses
 @adminBp.route('/nurses')
 def viewNurses():
@@ -142,6 +156,21 @@ def viewNurses():
         'header':row_headers
     }
     return render_template("adminViewNurses.html",data=data)
+
+@adminBp.route('/nurses/<Nurse_id>')
+def viewNurse(Nurse_id):
+    '''
+    This is the page that allows the admin to view one Nurse page
+    '''
+
+    mycursor.execute("SELECT name,biography,email,image,phone,gender,birthdate,address,ssn FROM operationsDB.Nurse WHERE ssn="+ Nurse_id)
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    
+    # tesst = b64encode(myresult[0][3])
+    myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4],r[5],r[6],r[7],r[8]) for r in myresult]
+
+    return render_template("adminViewNurse.html",data=myresult)
 
 @adminBp.route('/nurses/add')
 def addNurses():
