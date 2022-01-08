@@ -1,6 +1,5 @@
 from flask import Flask,Blueprint, redirect, url_for, request,render_template
 import mysql.connector
-from psycopg2.extensions import AsIs
 
 # mycursor = mydb.cursor()
 
