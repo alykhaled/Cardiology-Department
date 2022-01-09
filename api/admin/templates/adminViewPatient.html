@@ -32,5 +32,13 @@
                 <p class="px-md-4">{{data[0][9]}}</p>
             </div>
         </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-12">
+            </div>
+            <div class="col-md-6 col-sm-12">
+                <a href="http://127.0.0.1:5000/admin/patients/update/{{data[0][8]}}" class="btn btn-primary align-self-center">Edit</a>
+                <a href="http://127.0.0.1:5000/patient/delete/{{data[0][8]}}" class="btn btn-primary align-self-center">Delete</a>
+            </div>
+        </div>
     </div>
 {% endblock %}

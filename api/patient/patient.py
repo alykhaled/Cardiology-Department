@@ -84,11 +84,28 @@ def downloadFile(fileId):
     file_data = mycursor.fetchall()[0]
     return send_file(BytesIO(file_data[3]),attachment_filename=file_data[1], as_attachment=True)
 
-@patientBp.route('/update' ,methods=['POST'])
-def updatePatient():
-    #TODO
-    #     
-    return("TestRoom")
+@patientBp.route('/update/<patient_id>' ,methods=['POST','GET'])
+def updatePatient(patient_id):
+       
+    if request.method == 'POST':
+        ssn = request.form['ssn']
+        name = request.form['name']
+        medicalHistory = request.form['medicalHistory']
+        illness = request.form['illness']
+        bdate = request.form['bdate']
+        phone = request.form['phone']
+        image = request.files['image']
+        username = request.form['username']
+        password = request.form['password']
+        email = request.form['email']
+        address = request.form['address']
+        gender = request.form['gender']
+        Relatives_phone_Number = request.form['Relatives_phone_Number']
+        sql = "UPDATE `operationsDB`.`Patient` SET ssn=%s,name=%s,medicalHistory=%s,illness=%s,bdate=%s,phone=%s,image=%s,username=%s,password=%s,email=%s,address=%s,gender=%s,Relatives_phone_Number=%s WHERE ssn="+patient_id
+        val = (ssn,name,medicalHistory,illness,bdate,phone,image.read(),username,password,email,address,gender,Relatives_phone_Number)
+        mycursor.execute(sql,val)
+        mydb.commit()
+    return redirect(url_for('adminBp.viewPatient'))
 
 @patientBp.route('/delete/<ssn>' ,methods=['GET'])
 def deletePatient(ssn):

@@ -31,13 +31,22 @@ def addEquipment():
 
     return render_template("adminAddEquipment.html")
 
-@equipmentBp.route('/update' ,methods=['PUT'])
-def updateEquipment():
+@equipmentBp.route('/update/<id>' ,methods=['POST','GET'])
+def updateEquipment(id):
     '''
     This is update PUT request for the doctor
     that update a doctor in the database
-    '''    
-    return("Test")
+    '''
+    if request.method == 'POST':
+        Equipment_Name = request.form['Equipment_Name']
+        Eq_room = request.form['Eq_Room']
+        EquipmentModel = request.form['Equipment_Model']
+        Eq_Admission_date = request.form['Eq_Admission_date']
+        sql = "UPDATE `operationsDB`.`Equipment` SET Equipment_Name=%s,Eq_Room=%s,Equipment_Model=%s,Eq_Admission_date=%s WHERE Equipment_ID="+id
+        val = (Equipment_Name,Eq_room,EquipmentModel,Eq_Admission_date)
+        mycursor.execute(sql,val)
+        mydb.commit()
+    return redirect(url_for('adminBp.viewEquipment'))
 
 @equipmentBp.route('/delete/<Equipment_ID>' ,methods=['GET'])
 def deleteEquipment(Equipment_ID):

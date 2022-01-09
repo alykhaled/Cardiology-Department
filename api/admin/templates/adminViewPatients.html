@@ -34,16 +34,6 @@
            {% for l in r[1:] %}
              <td>{{l}}</td>
            {% endfor %}
-           <td>
-             <div class="text-right col">
-               <a href="http://127.0.0.1:5000/" class="btn btn-primary align-self-center">Edit</a>
-             </div>  
-           </td>
-           <td>
-             <div class="text-right col">
-               <a href="http://127.0.0.1:5000/patient/delete/{{r[0]}}" class="btn btn-primary align-self-center">Delete</a>
-             </div>  
-           </td>
         </tr>
         {% endfor %}
        </tbody>
