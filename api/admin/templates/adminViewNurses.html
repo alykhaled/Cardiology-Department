@@ -16,7 +16,7 @@
       {% for r in data.rec %}
       <div class="col mb-4">
         <div class="card " style="width: 20rem; ">
-          <img class="card-img-top" style="object-fit: cover; height: 270px;" src="data:;base64,{{ r[3] }}" alt="Card image cap">
+          <img class="card-img-top" style="object-fit: cover; height: 270px;" onerror="this.src='/static/DefaultImg.jpg'" src="data:;base64,{{ r[3] }}" alt="Card image cap">
           <div class="card-body">
             <h5 class="card-title text-center">{{r[0]}}</h5>
             <p class="card-text" style="overflow: hidden;">{{r[2]}}</p>

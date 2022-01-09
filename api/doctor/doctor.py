@@ -195,11 +195,18 @@ def updateDoctor(ssn):
         address = request.form['address']
         image = request.files['image']
 
-        sql = "UPDATE `operationsDB`.`Doctor` SET ssn=%s,name=%s,birthdate=%s,address=%s,biography=%s,phoneNumber=%s,gender=%s,username=%s,email=%s,password=%s,image=%s WHERE ssn="+ssn
+        if image.filename == '':
+            sql = "UPDATE `operationsDB`.`Doctor` SET ssn=%s,name=%s,birthdate=%s,address=%s,biography=%s,phoneNumber=%s,gender=%s,username=%s,email=%s,password=%s WHERE ssn="+ssn
+            val = (ssn,name,birthdate,address,biography,phoneNumber,gender,username,email,password)
+            mycursor.execute(sql,val)
+            mydb.commit()
+        else:
+            sql = "UPDATE `operationsDB`.`Doctor` SET ssn=%s,name=%s,birthdate=%s,address=%s,biography=%s,phoneNumber=%s,gender=%s,username=%s,email=%s,password=%s,image=%s WHERE ssn="+ssn
+            val = (ssn,name,birthdate,address,biography,phoneNumber,gender,username,email,password,image.read())
+            mycursor.execute(sql,val)
+            mydb.commit()
+
         
-        val = (ssn,name,birthdate,address,biography,phoneNumber,gender,username,email,password,image.read())
-        mycursor.execute(sql,val)
-        mydb.commit()
 
     return redirect(url_for('adminBp.viewDoctors'))
 

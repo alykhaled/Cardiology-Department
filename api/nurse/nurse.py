@@ -123,11 +123,18 @@ def updateNurse(ssn):
         if SuperSSN == '':
             SuperSSN = 'NULL'
 
-        sql = "UPDATE `operationsDB`.`Nurse` SET ssn=%s,name=%s,birthdate=%s,address=%s,superSsn="+SuperSSN+",salary=%s,biography=%s,phone=%s,gender=%s,username=%s,email=%s,password=%s,image=%s WHERE ssn="+ssn
         
-        val = (ssn,name,birthdate,address,salary,biography,phone,gender,username,email,password,image.read())
-        mycursor.execute(sql,val)
-        mydb.commit()
+        if image.filename == '':
+            sql = "UPDATE `operationsDB`.`Nurse` SET ssn=%s,name=%s,birthdate=%s,address=%s,superSsn="+SuperSSN+",salary=%s,biography=%s,phone=%s,gender=%s,username=%s,email=%s,password=%s WHERE ssn="+ssn
+            val = (ssn,name,birthdate,address,salary,biography,phone,gender,username,email,password)
+            mycursor.execute(sql,val)
+            mydb.commit()
+        else:
+            sql = "UPDATE `operationsDB`.`Nurse` SET ssn=%s,name=%s,birthdate=%s,address=%s,superSsn="+SuperSSN+",salary=%s,biography=%s,phone=%s,gender=%s,username=%s,email=%s,password=%s,image=%s WHERE ssn="+ssn
+            val = (ssn,name,birthdate,address,salary,biography,phone,gender,username,email,password,image.read())
+            mycursor.execute(sql,val)
+            mydb.commit()
+
 
     return redirect(url_for('adminBp.viewNurses'))
 
