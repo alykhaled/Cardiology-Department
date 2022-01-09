@@ -1,5 +1,6 @@
-from flask import Flask,Blueprint, redirect, url_for, request,render_template
+from flask import Flask,Blueprint, redirect, url_for, request,render_template, send_file
 import mysql.connector
+from io import BytesIO
 
 mydb = mysql.connector.connect(
     host='34.71.50.183',
@@ -23,8 +24,16 @@ def patientIndex():
     operations and patients that are
     waiting for a patient
     '''
+    mycursor.execute("SELECT id,File.name as 'File Name' , Doctor.name as 'Doctor Name', data FROM operationsDB.File Join Doctor ON doctorId = Doctor.ssn Where patientId = "+str(1190156)+";")
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    data = {
+        'message':"data retrieved",
+        'rec':myresult,
+        'header':row_headers
+    }
 
-    return render_template("patientIndex.html")
+    return render_template("patientDashboard.html",data=data)
 
 @patientBp.route('/operations')
 def viewOperations():
@@ -33,7 +42,7 @@ def viewOperations():
     to view and to add a new operation to the database
     using there api
     '''
-    mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn")
+    mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn WHERE Patient.ssn = "+str(1190156))
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -41,7 +50,8 @@ def viewOperations():
         'rec':myresult,
         'header':row_headers
     }
-    return render_template("doctorViewOperations.html",data=data)
+    return render_template("patientViewOperations.html",data=data)
+
 @patientBp.route('/add' ,methods=['POST'])
 def addPatient():
     #TODO
@@ -66,6 +76,13 @@ def addPatient():
 
     return redirect(url_for('adminBp.viewPatient'))
 
+@patientBp.route('/download/<fileId>')
+def downloadFile(fileId):
+    #TODO
+    mycursor.execute("SELECT id ,name, extension, data FROM File WHERE File.id = "+str(fileId))
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    file_data = mycursor.fetchall()[0]
+    return send_file(BytesIO(file_data[3]),attachment_filename=file_data[1], as_attachment=True)
 
 @patientBp.route('/update' ,methods=['POST'])
 def updatePatient():

@@ -1,5 +1,6 @@
 from flask import Flask,Blueprint, redirect, url_for, request,render_template
 import mysql.connector
+from base64 import b64encode
 
 # mycursor = mydb.cursor()
 mydb = mysql.connector.connect(
@@ -64,6 +65,20 @@ def viewPatients():
     }
     return render_template("doctorViewPatients.html",data=data)
 
+@doctorBp.route('/patients/<patient_id>')
+def viewPatient(patient_id):
+    '''
+    This is the page that allows the admin to view one patient page
+    '''
+    mycursor.execute("SELECT name,medicalHistory,email,image,phone,gender,bdate,address,ssn,illness,Relatives_phone_Number FROM operationsDB.Patient WHERE ssn="+ patient_id)
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    
+    # tesst = b64encode(myresult[0][3])
+    myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4],r[5],r[6],r[7],r[8],r[9],r[10]) for r in myresult]
+
+    return render_template("doctorViewPatient.html",data=myresult)
+
 @doctorBp.route('/nurses')
 def viewNurses():
     '''
@@ -71,15 +86,31 @@ def viewNurses():
     to view nurses in a table
     '''
 
-    mycursor.execute("SELECT name,birthdate,address,currentOperation,superSsn,salary,biography,phone,gender FROM operationsDB.Nurse")
+    mycursor.execute("SELECT name,biography,email,image,ssn FROM operationsDB.Nurse")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
+    myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4]) for r in myresult]
     data = {
         'message':"data retrieved",
         'rec':myresult,
         'header':row_headers
     }
     return render_template("doctorViewNurses.html",data=data)
+
+@doctorBp.route('/nurses/<Nurse_id>')
+def viewNurse(Nurse_id):
+    '''
+    This is the page that allows the admin to view one Nurse page
+    '''
+
+    mycursor.execute("SELECT name,biography,email,image,phone,gender,birthdate,address,ssn FROM operationsDB.Nurse WHERE ssn="+ Nurse_id)
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    
+    # tesst = b64encode(myresult[0][3])
+    myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4],r[5],r[6],r[7],r[8]) for r in myresult]
+
+    return render_template("doctorViewNurse.html",data=myresult)
 
 @doctorBp.route('/rooms')
 def viewRooms():
@@ -124,6 +155,24 @@ def addDoctor():
 
     return render_template("adminAddDoctor.html")
 
+@doctorBp.route('/patients/<patient_id>/addfile' ,methods=['POST'])
+def addFile(patient_id):
+    '''
+    This is add POST request for the doctor
+    that add a new doctor to the database
+    '''
+
+    if request.method == 'POST':
+        file = request.files['image']
+        sql = "INSERT INTO `operationsDB`.`File` (`name`, `extension`, `data`, `doctorId`, `patientId`) VALUES (%s,%s,%s,%s,%s);"
+        val = (file.filename ,file.filename.rsplit('.', 1)[1].lower(),file.read(),853495,patient_id)
+        mycursor.execute(sql,val)
+        mydb.commit()
+        return redirect(url_for('doctorBp.viewPatients'))
+
+        # print(name,username,password,biography,phone,email,gender,birthdate,ssn,address,image.read())
+
+    return render_template("adminAddDoctor.html")
 @doctorBp.route('/update' ,methods=['PUT'])
 def updateDoctor():
     '''

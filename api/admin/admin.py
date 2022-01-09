@@ -15,20 +15,42 @@ mycursor = mydb.cursor()
 
 @adminBp.route('/')
 def index():
+    #Patients Gender
     mycursor.execute("SELECT COUNT(ssn) FROM operationsDB.Patient WHERE gender='female';")
     femalesNum = mycursor.fetchall();
     mycursor.execute("SELECT COUNT(ssn) FROM operationsDB.Patient WHERE gender='male';")
     malesNum = mycursor.fetchall();
     
+    #Nurses Gender
     mycursor.execute("SELECT COUNT(ssn) FROM operationsDB.Nurse WHERE gender='female';")
     femalesNurses = mycursor.fetchall();
     mycursor.execute("SELECT COUNT(ssn) FROM operationsDB.Nurse WHERE gender='male';")
     malesNurses = mycursor.fetchall();
 
+    values = [];
+    #Operations Months
+    for i in range(12):
+        mycursor.execute("SELECT Count(id) FROM operationsDB.Operation WHERE MONTH(date) ="+ str(i+1) +";")
+        values.append(mycursor.fetchall()[0][0])
+
     dataPatient = {'Task' : 'Hours per Day', 'Male' : malesNum[0][0], 'Female' : femalesNum[0][0]}
     dataNurses = {'Task' : 'Hours per Day', 'Male' : malesNurses[0][0], 'Female' : femalesNurses[0][0]}
+    dataOperations = {'Month' : 'Number', 
+    'January'   : values[0], 
+    'February'  : values[1],
+    'March'     : values[2], 
+    'April'     : values[3],
+    'May'       : values[4], 
+    'June'      : values[5],
+    'July'      : values[6], 
+    'August'    : values[7],
+    'September' : values[8], 
+    'October'   : values[9],
+    'November'  : values[10], 
+    'December'  : values[11],
+    }
 
-    return render_template('adminDashboard.html',patients=dataPatient,nurses=dataNurses)
+    return render_template('adminDashboard.html',patients=dataPatient,nurses=dataNurses,operations=dataOperations)
 
 #Operations
 @adminBp.route('/operations')
@@ -39,6 +61,7 @@ def viewOperations():
     using there api
     '''
     search = request.args.get('search')
+    date = request.args.get('date')
     type = request.args.get('type')
     if type == 'name':
         mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn WHERE Operation.operationName LIKE '%"+search+"%'")
@@ -48,6 +71,8 @@ def viewOperations():
         mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn WHERE Operation.id LIKE '%"+search+"%'")
     elif type == 'doctor':
         mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn WHERE Doctor.name LIKE '%"+search+"%'")
+    elif type == 'date':
+        mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn WHERE date LIKE '%"+date+"%'")
     else :
         mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn")
     
