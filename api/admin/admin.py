@@ -242,6 +242,20 @@ def addNurses():
 
     return render_template("adminAddNurse.html")
 
+@adminBp.route('/nurses/update/<ssn>')
+def updateNurses(ssn):
+    '''
+    This is the page that allows the admin to view nurses in a table
+    '''
+    mycursor.execute("SELECT name,biography,email,image,phone,gender,birthdate,address,ssn,superSsn,password,username,salary FROM operationsDB.Nurse WHERE ssn="+ ssn)
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    
+    # tesst = b64encode(myresult[0][3])
+    myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4],r[5],r[6],r[7],r[8],r[9],r[10],r[11],r[12]) for r in myresult]
+
+    return render_template("adminUpdateNurse.html",data=myresult)
+
 #Doctors
 @adminBp.route('/doctors')
 def viewDoctors():
@@ -273,12 +287,12 @@ def viewDoctor(doctor_id):
     This is the page that allows the admin to view one doctor page
     '''
 
-    mycursor.execute("SELECT name,biography,email,image,phoneNumber,gender,birthdate,address,ssn FROM operationsDB.Doctor WHERE ssn="+ doctor_id)
+    mycursor.execute("SELECT name,biography,email,image,phoneNumber,gender,birthdate,address,ssn,username,password FROM operationsDB.Doctor WHERE ssn="+ doctor_id)
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     
     # tesst = b64encode(myresult[0][3])
-    myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4],r[5],r[6],r[7],r[8]) for r in myresult]
+    myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4],r[5],r[6],r[7],r[8],r[9],r[10]) for r in myresult]
 
     return render_template("adminViewDoctor.html",data=myresult)
 
@@ -297,6 +311,20 @@ def addDoctors():
         'header':row_headers
     }
     return render_template("adminAddDoctor.html",data=data)
+
+@adminBp.route('/doctors/update/<ssn>')
+def updateDoctor(ssn):
+    '''
+    This is the page that allows the admin to view nurses in a table
+    '''
+    mycursor.execute("SELECT name,biography,email,image,phoneNumber,gender,birthdate,address,ssn,username,password FROM operationsDB.Doctor WHERE ssn="+ ssn)
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    
+    # tesst = b64encode(myresult[0][3])
+    myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4],r[5],r[6],r[7],r[8],r[9],r[10]) for r in myresult]
+
+    return render_template("adminUpdateDoctor.html",data=myresult)
 
 #Rooms
 @adminBp.route('/rooms')
