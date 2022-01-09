@@ -102,8 +102,17 @@ def viewEquipment():
     This is the page that allows the admin
     to view equipment in a table
     '''
-
-    mycursor.execute("SELECT * FROM operationsDB.Equipment")
+    search = request.args.get('search')
+    type = request.args.get('type')
+    if type == 'name':
+        mycursor.execute("SELECT * FROM operationsDB.Equipment WHERE Equipment.Equipment_Name LIKE '%"+search+"%'")
+    elif type == 'id':
+        mycursor.execute("SELECT * FROM operationsDB.Equipment WHERE Equipment.Equipment_ID LIKE '%"+search+"%'")
+    elif type == 'room':
+        mycursor.execute("SELECT * FROM operationsDB.Equipment WHERE Equipment.Eq_room LIKE '%"+search+"%'")
+    
+    else :
+        mycursor.execute("SELECT * FROM operationsDB.Equipment")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -124,16 +133,32 @@ def addEquipment():
     return render_template("adminAddEquipment.html")
 
 #Patients
+
 @adminBp.route('/patients')
 def viewPatient():
     '''
     This is the page that allows the admin
     to view patient in a table
     '''
-
-    mycursor.execute("SELECT ssn as SSN,name as Name ,phone as 'Phone Number',illness as Illness,2022-YEAR(bdate) as AGE FROM operationsDB.Patient")
+    search = request.args.get('search')
+    type = request.args.get('type')
+    if type == 'name':
+        mycursor.execute("SELECT ssn as SSN,name as Name ,phone as 'Phone Number',illness as Illness,2022-YEAR(bdate) as AGE FROM operationsDB.Patient WHERE Patient.name  LIKE '%"+search+"%'")
+    elif type == 'ssn':
+        mycursor.execute("SELECT ssn as SSN,name as Name ,phone as 'Phone Number',illness as Illness,2022-YEAR(bdate) as AGE FROM operationsDB.Patient WHERE Patient.ssn LIKE '%"+search+"%'")
+    elif type == 'age':
+        mycursor.execute("SELECT ssn as SSN,name as Name ,phone as 'Phone Number',illness as Illness,2022-YEAR(bdate) as AGE FROM operationsDB.Patient WHERE Patient.bdate LIKE '%"+search+"%'")
+    
+    else :
+        mycursor.execute("SELECT ssn as SSN,name as Name ,phone as 'Phone Number',illness as Illness,2022-YEAR(bdate) as AGE FROM operationsDB.Patient")
+    
+    #mycursor.execute("SELECT ssn as SSN,name as Name ,phone as 'Phone Number',illness as Illness,2022-YEAR(bdate) as AGE FROM operationsDB.Patient WHERE name LIKE '%"+search+"%' ORDER BY name  ")
+   #mycursor.execute("SELECT ssn,name  ,phone ,illness,2022-YEAR(bdate) operationsDB.Patient WHERE name LIKE '%"+search+"%' ORDER BY name  ")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    
     myresult = mycursor.fetchall()
+   # myresult = [(r[0],r[1],r[2],r[3],r[4]) for r in myresult]
+    
     data = {
         'message':"data retrieved",
         'rec':myresult,
@@ -169,8 +194,11 @@ def viewNurses():
     '''
     This is the page that allows the admin to view nurses in a table
     '''
-
-    mycursor.execute("SELECT name,biography,email,image,ssn FROM operationsDB.Nurse")
+    search = request.args.get('search')
+    if search == None:
+        search = ""
+    #mycursor.execute("SELECT name,biography,email,image,phone,gender,birthdate,address,ssn FROM operationsDB.Nurse WHERE ssn="+ Nurse_id)
+    mycursor.execute("SELECT name,biography,email,image,ssn FROM operationsDB.Nurse WHERE name LIKE '%"+search+"%' ORDER BY name ")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4]) for r in myresult]
@@ -187,7 +215,8 @@ def viewNurse(Nurse_id):
     '''
     This is the page that allows the admin to view one Nurse page
     '''
-
+    
+    
     mycursor.execute("SELECT name,biography,email,image,phone,gender,birthdate,address,ssn FROM operationsDB.Nurse WHERE ssn="+ Nurse_id)
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
@@ -202,6 +231,14 @@ def addNurses():
     '''
     This is the page that allows the admin to view nurses in a table
     '''
+    mycursor.execute("SELECT * FROM operationsDB.Nurse")
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    data = {
+        'message':"data retrieved",
+        'rec':myresult,
+        'header':row_headers
+    }
 
     return render_template("adminAddNurse.html")
 
@@ -268,8 +305,16 @@ def viewRooms():
     This is the page that allows the admin
     to view rooms in a table
     '''
-
-    mycursor.execute("SELECT * FROM operationsDB.`Operation Room`;")
+    search = request.args.get('search')
+    type = request.args.get('type')
+    if type == 'location':
+        mycursor.execute("SELECT * FROM operationsDB.Operation Room WHERE location LIKE '%"+search+"%'")
+    elif type == 'id':
+        mycursor.execute("SELECT * FROM operationsDB.Operation Room WHERE id LIKE '%"+search+"%'")
+    
+    
+    else :
+        mycursor.execute("SELECT * FROM operationsDB.`Operation Room`;")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
