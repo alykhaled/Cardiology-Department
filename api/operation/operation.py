@@ -39,7 +39,7 @@ def addOperation():
         doctorId = ""
         print(session.get("accountType"))
         if session.get("accountType") == "doctor":
-            doctorId = session['accountId']
+            doctorId = session.get("id")
         else:
             doctorId = request.form['doctorId']
         roomId = request.form['roomId']

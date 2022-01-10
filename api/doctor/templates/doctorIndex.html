@@ -15,7 +15,7 @@
         var calendar = new FullCalendar.Calendar(calendarEl, {
           googleCalendarApiKey: 'AIzaSyD8pN6tKv-UGrTi5o_3tF2jzvvTNcvrNz4',
           events: {
-            googleCalendarId: 'alykhaleddev@gmail.com'
+            googleCalendarId: '{{session.email}}'
           }
         });
         calendar.render();
@@ -69,7 +69,7 @@
         <div class="profile d-flex flex-row align-items-center mb-3 border" style="padding: 10px; border-radius: 30px;">
           <img class="rounded-circle " style="width: 50px;" src="https://loremflickr.com/600/600" alt="Cat">
           <div class="text-center pl-3 d-flex flex-column " >
-            <span class="" style="font-weight: bold;">Dr. Michael Scott</span>
+            <span class="" style="font-weight: bold;">{{session.name}}</span>
             <span class=" ">Doctor</span>
           </div>
         </div>
@@ -81,7 +81,7 @@
           <span></span>
         </div>
         {% block head %}
-        <h2>Welcome {{session.user}}</h2>
+        <h2>Welcome {{session.name}}</h2>
         <h4>Make sure you made your calendar public</h4>
         <div id='calendar'></div>
 

@@ -1,4 +1,4 @@
-from flask import Flask,Blueprint, redirect, url_for, request,render_template, send_file
+from flask import Flask,Blueprint, redirect, url_for, request,render_template, send_file, session
 import mysql.connector
 from io import BytesIO
 
@@ -24,7 +24,17 @@ def patientIndex():
     operations and patients that are
     waiting for a patient
     '''
-    mycursor.execute("SELECT id,File.name as 'File Name' , Doctor.name as 'Doctor Name', data FROM operationsDB.File Join Doctor ON doctorId = Doctor.ssn Where patientId = "+str(1190156)+";")
+    mycursor.execute("SELECT name,email,username FROM Patient WHERE ssn = "+str(session.get("id")))
+    print(session.get("id"))
+    result = mycursor.fetchall()[0]
+    name = result[0]
+    email = result[1]
+    username = result[2]
+    session['name'] = name
+    session['email'] = email
+    session['username'] = username
+
+    mycursor.execute("SELECT id,File.name as 'File Name' , Doctor.name as 'Doctor Name', data FROM operationsDB.File Join Doctor ON doctorId = Doctor.ssn Where patientId = "+str(session.get("id"))+";")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {

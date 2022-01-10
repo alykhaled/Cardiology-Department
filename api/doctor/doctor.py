@@ -36,16 +36,14 @@ def doctorIndex():
     operations and patients that are
     waiting for a doctor
     '''
-    
-    session["user"] = 'Aly Khaled'
-    session.modified = True
-    session["accountType"] = "doctor"
-    session.modified = True
-    session['accountId'] = '677567'
-    session.modified = True
-    print(session.get("accountType"))
-    session.modified = True
-
+    mycursor.execute("SELECT name,email,username FROM Doctor WHERE ssn = "+str(session.get("id")))
+    result = mycursor.fetchall()[0]
+    name = result[0]
+    email = result[1]
+    username = result[2]
+    session['name'] = name
+    session['email'] = email
+    session['username'] = username
     creds = None
 
     if os.path.exists('token.json'):
@@ -234,7 +232,7 @@ def addFile(patient_id):
     if request.method == 'POST':
         file = request.files['image']
         sql = "INSERT INTO `operationsDB`.`File` (`name`, `extension`, `data`, `doctorId`, `patientId`) VALUES (%s,%s,%s,%s,%s);"
-        val = (file.filename ,file.filename.rsplit('.', 1)[1].lower(),file.read(),853495,patient_id)
+        val = (file.filename ,file.filename.rsplit('.', 1)[1].lower(),file.read(),str(session.get("id")),patient_id)
         mycursor.execute(sql,val)
         mydb.commit()
         return redirect(url_for('doctorBp.viewPatients'))
