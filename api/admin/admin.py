@@ -275,7 +275,15 @@ def viewNurse(Nurse_id):
     # tesst = b64encode(myresult[0][3])
     myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4],r[5],r[6],r[7],r[8]) for r in myresult]
 
-    return render_template("adminViewNurse.html",data=myresult)
+    mycursor.execute("SELECT Operation.operationName AS 'Operation Name', Operation.date AS 'Date' FROM operationsDB.Nurse_has_Operation JOIN Operation ON OperationID = Operation.id WHERE NurseSSN="+ Nurse_id )
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    nurseOperationsAll = mycursor.fetchall()
+    nurseOperations = {
+        'message':"data retrieved",
+        'rec':nurseOperationsAll,
+        'header':row_headers
+    }
+    return render_template("adminViewNurse.html",data=myresult,nurseOperations=nurseOperations)
 
 @adminBp.route('/nurses/add')
 def addNurses():
