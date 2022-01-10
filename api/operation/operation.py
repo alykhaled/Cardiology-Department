@@ -1,6 +1,6 @@
 from flask import Flask,Blueprint, redirect, url_for, request,render_template
 import mysql.connector
-
+from Google import create_service
 mydb = mysql.connector.connect(
     host='34.71.50.183',
     user="root",
@@ -16,7 +16,8 @@ operationBp = Blueprint('operationBp', __name__, template_folder='templates',sta
 mycursor = mydb.cursor()
 @operationBp.route('/add' ,methods=['POST'])
 def addOperation():
-    #TODO
+    
+
     if request.method == 'POST':
         operationName = request.form['operationName']
         patientId = request.form['patientId']
@@ -26,6 +27,7 @@ def addOperation():
         startTime = request.form['startTime']
         endTime = request.form['endTime']
         sql = "INSERT INTO `operationsDB`.`Operation` (`operationName`,`patientId`,`doctorId`,`roomId`,`date`,`startTime`,`endTime`) VALUES (%s,%s,%s,%s,%s,%s,%s);"
+
         val = (operationName,patientId,doctorId,roomId,date,startTime,endTime)
         mycursor.execute(sql,val)
         mydb.commit()

@@ -7,9 +7,11 @@ from room.room import roomBp
 from equipment.equipment import equipmentBp
 from patient.patient import patientBp
 from home.home import homeBp
+from flask_session import Session
 import mysql.connector
 
 app = Flask(__name__)
+app.secret_key = "gdfghfddghsrywt"
 mydb = mysql.connector.connect(
     host='34.71.50.183',
     user="root",
