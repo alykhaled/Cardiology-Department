@@ -85,8 +85,13 @@ def viewNurses():
     This is the page that allows the doctor
     to view nurses in a table
     '''
+    search = request.args.get('search')
+    if search == None:
+        search = ""
+    #mycursor.execute("SELECT name,biography,email,image,phone,gender,birthdate,address,ssn FROM operationsDB.Nurse WHERE ssn="+ Nurse_id)
+    mycursor.execute("SELECT name,biography,email,image,ssn FROM operationsDB.Nurse WHERE name LIKE '%"+search+"%' ORDER BY name ")
 
-    mycursor.execute("SELECT name,biography,email,image,ssn FROM operationsDB.Nurse")
+    #mycursor.execute("SELECT name,biography,email,image,ssn FROM operationsDB.Nurse")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4]) for r in myresult]

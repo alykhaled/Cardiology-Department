@@ -372,9 +372,13 @@ def viewRooms():
     search = request.args.get('search')
     type = request.args.get('type')
     if type == 'location':
-        mycursor.execute("SELECT * FROM operationsDB.`Operation Room` WHERE location LIKE '%"+search+"%'")
+
+        mycursor.execute("SELECT * FROM operationsDB.`Operation Room` WHERE `Operation Room`.Room_Location  LIKE '%"+search+"%'")
     elif type == 'id':
-        mycursor.execute("SELECT * FROM operationsDB.`Operation Room` WHERE id LIKE '%"+search+"%'")
+        mycursor.execute("SELECT * FROM operationsDB.`Operation Room` WHERE `Operation Room`.Operation_Room_ID LIKE '%"+search+"%'")
+    
+    
+
     else :
         mycursor.execute("SELECT * FROM operationsDB.`Operation Room`;")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
