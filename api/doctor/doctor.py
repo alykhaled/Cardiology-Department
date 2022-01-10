@@ -77,7 +77,22 @@ def viewOperations():
     to view and to add a new operation to the database
     using there api
     '''
-    mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn")
+    search = request.args.get('search')
+    date = request.args.get('date')
+    type = request.args.get('type')
+    if type == 'name':
+        mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time', Room_Location AS 'Room Location' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn JOIN `Operation Room` ON roomId = Operation_Room_ID WHERE Operation.operationName LIKE '%"+search+"%'")
+    elif type == 'patient':
+        mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time', Room_Location AS 'Room Location' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn JOIN `Operation Room` ON roomId = Operation_Room_ID WHERE Patient.name LIKE '%"+search+"%'")
+    elif type == 'id':
+        mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time', Room_Location AS 'Room Location' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn JOIN `Operation Room` ON roomId = Operation_Room_ID WHERE Operation.id LIKE '%"+search+"%'")
+    elif type == 'doctor':
+        mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time', Room_Location AS 'Room Location' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn JOIN `Operation Room` ON roomId = Operation_Room_ID WHERE Doctor.name LIKE '%"+search+"%'")
+    elif type == 'date':
+        mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time', Room_Location AS 'Room Location' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn JOIN `Operation Room` ON roomId = Operation_Room_ID WHERE date LIKE '%"+date+"%'")
+    else :
+        mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time', Room_Location AS 'Room Location' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn JOIN `Operation Room` ON roomId = Operation_Room_ID")
+    
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {

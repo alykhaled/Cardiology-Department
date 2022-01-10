@@ -1,4 +1,4 @@
-from flask import Flask,Blueprint, redirect, url_for, request,render_template
+from flask import Flask,Blueprint, redirect, url_for, request,render_template, session
 import mysql.connector
 
 # mycursor = mydb.cursor()
@@ -21,8 +21,16 @@ def nurseIndex():
     operations and patients that are
     waiting for a doctor
     '''
-
-    return render_template("nurseIndex.html")
+    session["id"] = "65566"
+    mycursor.execute("SELECT Operation.operationName AS 'Operation Name', Operation.date AS 'Date' FROM operationsDB.Nurse_has_Operation JOIN Operation ON OperationID = Operation.id WHERE NurseSSN="+ session.get("id") )
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    nurseOperationsAll = mycursor.fetchall()
+    nurseOperations = {
+        'message':"data retrieved",
+        'rec':nurseOperationsAll,
+        'header':row_headers
+    }
+    return render_template("nurseDashboard.html",data=nurseOperations)
 
 @nurseBp.route('/operations')
 def viewOperations():
@@ -31,7 +39,22 @@ def viewOperations():
     to view and to add a new operation to the database
     using there api
     '''
-    mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn")
+    search = request.args.get('search')
+    date = request.args.get('date')
+    type = request.args.get('type')
+    if type == 'name':
+        mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time', Room_Location AS 'Room Location' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn JOIN `Operation Room` ON roomId = Operation_Room_ID WHERE Operation.operationName LIKE '%"+search+"%'")
+    elif type == 'patient':
+        mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time', Room_Location AS 'Room Location' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn JOIN `Operation Room` ON roomId = Operation_Room_ID WHERE Patient.name LIKE '%"+search+"%'")
+    elif type == 'id':
+        mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time', Room_Location AS 'Room Location' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn JOIN `Operation Room` ON roomId = Operation_Room_ID WHERE Operation.id LIKE '%"+search+"%'")
+    elif type == 'doctor':
+        mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time', Room_Location AS 'Room Location' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn JOIN `Operation Room` ON roomId = Operation_Room_ID WHERE Doctor.name LIKE '%"+search+"%'")
+    elif type == 'date':
+        mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time', Room_Location AS 'Room Location' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn JOIN `Operation Room` ON roomId = Operation_Room_ID WHERE date LIKE '%"+date+"%'")
+    else :
+        mycursor.execute("SELECT id as ID ,operationName as 'Operation Name', Patient.name as 'Patient Name', Doctor.name as 'Doctor Name', date as Date,startTime as 'Start Time', endTime as 'End Time', Room_Location AS 'Room Location' FROM Operation JOIN Patient ON Operation.patientId = Patient.ssn JOIN Doctor on Operation.doctorID = Doctor.ssn JOIN `Operation Room` ON roomId = Operation_Room_ID")
+    
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
