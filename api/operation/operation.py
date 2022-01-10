@@ -34,11 +34,24 @@ def addOperation():
     return redirect(url_for('adminBp.viewOperations'))
 
 
-@operationBp.route('/update' ,methods=['POST'])
-def updateOperation():
+@operationBp.route('/update/<id>' ,methods=['POST'])
+def updateOperation(id):
     #TODO
-    #     
-    return("Test")
+    #  
+    if request.method == 'POST':
+        operationName = request.form['operationName']
+        patientId = request.form['patientId']
+        doctorId = request.form['doctorId']
+        roomId = request.form['roomId']
+        date = request.form['date']
+        startTime = request.form['startTime']
+        endTime = request.form['endTime']
+        sql = "UPDATE `operationsDB`.`Operation` SET operationName=%s,patientId=%s,doctorId=%s,roomId=%s,date=%s,startTime=%s,endTime=%s WHERE id="+id
+        val = (operationName,patientId,doctorId,roomId,date,startTime,endTime)
+        mycursor.execute(sql,val)
+        mydb.commit()
+    return redirect(url_for('adminBp.viewOperations'))   
+    
 
 @operationBp.route('/delete/<operation_id>' ,methods=['GET'])
 def deleteOperation(operation_id):
