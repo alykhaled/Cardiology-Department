@@ -27,7 +27,7 @@
                 <h4 class="px-md-4">Address</h4>
                 <p class="px-md-4">{{data[0][7]}}</p>
                 <h4 class="px-md-4">Operations</h4>
-                <form action="http://localhost:5000/room/add" method="POST" enctype="multipart/form-data"">
+                <form action="http://localhost:5000/admin/nurses/{{data[0][8]}}/addOp" method="POST" enctype="multipart/form-data">
                     <div class="row px-4">
                         <div class="input-group col-8 ">
                             <input type="text" class="form-control" id="OperationID" name="OperationID" placeholder="Add Operation ID">
@@ -35,6 +35,7 @@
                         <button type="submit" class="btn btn-primary col ">Send</button>
                     </div>
                 </form>
+
             </div>
 
         </div>

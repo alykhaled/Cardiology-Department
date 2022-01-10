@@ -428,3 +428,11 @@ def addRooms():
     return render_template("adminAddRooms.html")
   
 
+@adminBp.route('/nurses/<Nurse_id>/addOp' ,methods=['POST'])
+def addNurseOp(Nurse_id):
+    OperationID = request.form['OperationID']
+    sql = "INSERT INTO `operationsDB`.`Nurse_has_Operation` (`NurseSSN`, `OperationID`) VALUES (%s, %s);"
+    val = (Nurse_id,OperationID)
+    mycursor.execute(sql,val)
+    mydb.commit()
+    return redirect(url_for('adminBp.viewNurses'))
