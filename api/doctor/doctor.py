@@ -46,59 +46,28 @@ def doctorIndex():
     print(session.get("accountType"))
     session.modified = True
 
-    # service = create_service(CLIENT_SECRET_FILE, API_NAME, API_VERSION,SCOPES)
     creds = None
-    # The file token.json stores the user's access and refresh tokens, and is
-    # created automatically when the authorization flow completes for the first
-    # time.
+
     if os.path.exists('token.json'):
         creds = Credentials.from_authorized_user_file('token.json', SCOPES)
-    # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file(
-                'client_secret_240695600096-ndnm8sahb9f9p117913u6ugkhak9rlq1.apps.googleusercontent.com.json', SCOPES)
+            flow = InstalledAppFlow.from_client_secrets_file('client_secret_240695600096-ndnm8sahb9f9p117913u6ugkhak9rlq1.apps.googleusercontent.com.json', SCOPES)
             creds = flow.run_local_server()
             session['token'] = creds.token
             session['refresh_token'] = creds.refresh_token
             session['client_id'] = creds.client_id
             session['client_secret'] = creds.client_secret
-        # Save the credentials for the next run
         with open('token.json', 'w') as token:
             token.write(creds.to_json())
 
     try:
         service = build('calendar', 'v3', credentials=creds)
-
-        # Call the Calendar API
-        now = datetime.datetime.utcnow().isoformat() + 'Z'  # 'Z' indicates UTC time
-        print('Getting the upcoming 10 events')
-        events_result = service.events().list(calendarId='primary', timeMin=now, maxResults=10, singleEvents=True, orderBy='startTime').execute()
-        events = events_result.get('items', [])
-
-        if not events:
-            print('No upcoming events found.')
-            
-
-        # Prints the start and name of the next 10 events
-        for event in events:
-            start = event['start'].get('dateTime', event['start'].get('date'))
-            print(start, event['summary'])
-
     except HttpError as error:
         print('An error occurred: %s' % error)
 
-    # flow = InstalledAppFlow.from_client_secrets_file(CLIENT_SECRET_FILE, SCOPES)
-    # cred = flow.run_local_server()
-    # session['googleAccessToken'] = cred.token
-    # print(cred)
-    # credentials = AccessTokenCredentials(session['googleAccessToken'], 'user-agent-value')
-    # print(credentials)
-
-    # session['service'] = service
-    # print(service)
     return render_template("doctorIndex.html")
 
 @doctorBp.route('/operations')
