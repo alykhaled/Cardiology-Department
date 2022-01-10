@@ -86,6 +86,22 @@ def viewOperations():
 
     return render_template("adminViewOperations.html",data=data)
 
+@adminBp.route('/operations/update/<id>')
+def UpdateOperation(id):
+    '''
+    This is the page that allows the admin
+    to update equipment in a table
+    '''
+  
+    mycursor.execute("SELECT id,operationName,patientId,doctorId,roomId,date,startTime,endTime FROM operationsDB.Operation WHERE id="+ id)
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    
+    myresult = mycursor.fetchall()
+    
+    # tesst = b64encode(myresult[0][3])
+    myresult = [(r[0],r[1],r[2],r[3],r[4],r[5],r[6],r[7]) for r in myresult]
+   
+    return render_template("adminUpdateOperation.html",data=myresult)
 @adminBp.route('/operations/add')
 def addOperations():
     '''
@@ -386,6 +402,22 @@ def viewRooms():
     }
     return render_template("adminViewRooms.html",data=data)
 
+@adminBp.route('/rooms/update/<id>')
+def UpdateRoom(id):
+    '''
+    This is the page that allows the admin
+    to update room in a table
+    '''
+  
+    mycursor.execute("SELECT Operation_Room_ID,Room_Location FROM operationsDB.'Operation Room' WHERE Operation_Room_ID="+ id)
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    
+    myresult = mycursor.fetchall()
+    
+    # tesst = b64encode(myresult[0][3])
+    myresult = [(r[0],r[1]) for r in myresult]
+   
+    return render_template("adminUpdateRooms.html",data=myresult)
 @adminBp.route('/rooms/add')
 def addRooms():
     '''
