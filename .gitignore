@@ -3,6 +3,7 @@
 # dependencies
 client/node_modules
 api/node_modules
+api/flask_session
 /.pnp
 .pnp.js
 .vs

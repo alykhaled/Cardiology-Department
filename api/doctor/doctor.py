@@ -1,12 +1,10 @@
 from flask import Flask,Blueprint, redirect, url_for, request,render_template, session
 import mysql.connector
 from base64 import b64encode
-from flask_session import Session
-# from google_auth_oauthlib.flow import Flow, InstalledAppFlow
-# from oauth2client.client import AccessTokenCredentials
 import os
 import datetime
 import os.path
+from flask_cors import CORS, cross_origin
 
 from google.auth.transport.requests import Request
 from google.oauth2.credentials import Credentials
@@ -25,6 +23,12 @@ mydb = mysql.connector.connect(
 
 doctorBp = Blueprint('doctorBp', __name__, template_folder='templates',static_folder='static')
 mycursor = mydb.cursor()
+
+CLIENT_SECRET_FILE = "client_secret_240695600096-ndnm8sahb9f9p117913u6ugkhak9rlq1.apps.googleusercontent.com.json"
+API_NAME = "calendar"
+API_VERSION = "v3"
+SCOPES = ['https://www.googleapis.com/auth/calendar']
+
 @doctorBp.route('/')
 def doctorIndex():
     '''
@@ -32,12 +36,16 @@ def doctorIndex():
     operations and patients that are
     waiting for a doctor
     '''
-    CLIENT_SECRET_FILE = "client_secret_240695600096-ndnm8sahb9f9p117913u6ugkhak9rlq1.apps.googleusercontent.com.json"
-    API_NAME = "calendar"
-    API_VERSION = "v3"
-    SCOPES = ['https://www.googleapis.com/auth/calendar']
     
-    session['user'] = 'Aly Khaled'
+    session["user"] = 'Aly Khaled'
+    session.modified = True
+    session["accountType"] = "doctor"
+    session.modified = True
+    session['accountId'] = '677567'
+    session.modified = True
+    print(session.get("accountType"))
+    session.modified = True
+
     # service = create_service(CLIENT_SECRET_FILE, API_NAME, API_VERSION,SCOPES)
     creds = None
     # The file token.json stores the user's access and refresh tokens, and is
@@ -53,6 +61,10 @@ def doctorIndex():
             flow = InstalledAppFlow.from_client_secrets_file(
                 'client_secret_240695600096-ndnm8sahb9f9p117913u6ugkhak9rlq1.apps.googleusercontent.com.json', SCOPES)
             creds = flow.run_local_server()
+            session['token'] = creds.token
+            session['refresh_token'] = creds.refresh_token
+            session['client_id'] = creds.client_id
+            session['client_secret'] = creds.client_secret
         # Save the credentials for the next run
         with open('token.json', 'w') as token:
             token.write(creds.to_json())
@@ -63,9 +75,7 @@ def doctorIndex():
         # Call the Calendar API
         now = datetime.datetime.utcnow().isoformat() + 'Z'  # 'Z' indicates UTC time
         print('Getting the upcoming 10 events')
-        events_result = service.events().list(calendarId='primary', timeMin=now,
-                                              maxResults=10, singleEvents=True,
-                                              orderBy='startTime').execute()
+        events_result = service.events().list(calendarId='primary', timeMin=now, maxResults=10, singleEvents=True, orderBy='startTime').execute()
         events = events_result.get('items', [])
 
         if not events:
@@ -106,6 +116,7 @@ def viewOperations():
         'rec':myresult,
         'header':row_headers
     }
+    
     return render_template("doctorViewOperations.html",data=data)
 
 @doctorBp.route('/operations/add')

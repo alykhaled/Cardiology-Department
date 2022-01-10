@@ -7,11 +7,24 @@ from room.room import roomBp
 from equipment.equipment import equipmentBp
 from patient.patient import patientBp
 from home.home import homeBp
-from flask_session import Session
+# from flask_session import Session
 import mysql.connector
+from flask_session import Session
+from flask_cors import CORS
+
 
 app = Flask(__name__)
-app.secret_key = "gdfghfddghsrywt"
+
+SECRET_KEY = "changeme"
+SESSION_TYPE = 'filesystem'
+app.config.from_object(__name__)
+Session(app)
+CORS(app)
+app.config.update(SESSION_COOKIE_SAMESITE="None", SESSION_COOKIE_SECURE=True)
+
+
+# app.config['SESSION_TYPE'] = 'null'
+# Session(app)
 mydb = mysql.connector.connect(
     host='34.71.50.183',
     user="root",

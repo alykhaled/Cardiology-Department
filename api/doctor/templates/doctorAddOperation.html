@@ -1,25 +1,14 @@
-{% extends "index.html" %}
+{% extends "doctorIndex.html" %}
 {% block head %}
     <h3>Add Operation</h3>
     <form action="http://localhost:5000/operation/add" method="POST" enctype="multipart/form-data">
-      
-        <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="id">Operation ID</label>
-            <input type="text" class="form-control" name="id" id="id" placeholder="Operation ID">
-          </div>
-          <div class="form-group col-md-6">
-            <label for="operationName">Operation Name</label>
-            <input type="text" class="form-control" name="operationName" id="operationName" placeholder="Operation Name">
-          </div>
+        <div class="form-group">
+          <label for="operationName">Operation Name</label>
+          <input type="text" class="form-control" name="operationName" id="operationName" placeholder="Operation Name">
         </div>
         <div class="form-group">  
           <label for="patientId">Patient ID</label>
           <input type="text" class="form-control" name="patientId" id="patientId" placeholder="Patient ID">
-        </div>
-        <div class="form-group">  
-          <label for="doctorId">Surgeon ID</label>
-          <input type="text" class="form-control" name="doctorId" id="doctorId" placeholder="Surgeon ID">
         </div>
         <div class="form-group">
           <label for="roomId">Room ID</label>
