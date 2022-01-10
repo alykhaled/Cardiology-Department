@@ -1,7 +1,7 @@
 {% extends "index.html" %}
 {% block head %}
     <h3>Update Room</h3>
-    <form action="http://localhost:5000/rooms/update/{{data[0][0]}}" method="POST" enctype="multipart/form-data">
+    <form action="http://localhost:5000/admin/rooms/update/{{data[0][0]}}" method="POST" enctype="multipart/form-data">
         <div class="form-group">
             <label for="Room_Location">Room Location</label>
             <input type="text" class="form-control" id="Room_Location" name="Room_Location" value="{{data[0][1]}}">
