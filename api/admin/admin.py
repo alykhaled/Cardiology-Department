@@ -113,14 +113,36 @@ def viewEquipment():
     
     else :
         mycursor.execute("SELECT * FROM operationsDB.Equipment")
+    
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    
     myresult = mycursor.fetchall()
+    
+    # tesst = b64encode(myresult[0][3])
+    
     data = {
         'message':"data retrieved",
         'rec':myresult,
         'header':row_headers
     }
     return render_template("adminViewEquipment.html",data=data)
+
+@adminBp.route('/equipment/update/<id>')
+def UpdateEquipment(id):
+    '''
+    This is the page that allows the admin
+    to update equipment in a table
+    '''
+  
+    mycursor.execute("SELECT Equipment_ID,Equipment_Name,Eq_Room,Equipment_Model,Eq_Admission_date FROM operationsDB.Equipment WHERE Equipment_ID="+ id)
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    
+    myresult = mycursor.fetchall()
+    
+    # tesst = b64encode(myresult[0][3])
+    myresult = [(r[0],r[1],r[2],r[3],r[4]) for r in myresult]
+   
+    return render_template("adminUpdateEquipment.html",data=myresult)
 
 @adminBp.route('/equipment/add')
 def addEquipment():
@@ -179,15 +201,29 @@ def viewpatient(patient_id):
     This is the page that allows the admin to view one patient page
     '''
 
-    mycursor.execute("SELECT name,medicalHistory,email,image,phone,gender,bdate,address,ssn,illness,Relatives_phone_Number FROM operationsDB.Patient WHERE ssn="+ patient_id)
+    mycursor.execute("SELECT name,medicalHistory,email,image,phone,gender,bdate,address,ssn,illness,Relatives_phone_Number,username,password FROM operationsDB.Patient WHERE ssn="+ patient_id)
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     
     # tesst = b64encode(myresult[0][3])
-    myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4],r[5],r[6],r[7],r[8],r[9],r[10]) for r in myresult]
+    myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4],r[5],r[6],r[7],r[8],r[9],r[10],r[11],r[12]) for r in myresult]
 
     return render_template("adminViewPatient.html",data=myresult)
 
+@adminBp.route('/patients/update/<patient_id>')
+def updatepatient(patient_id):
+    '''
+    This is the page that allows the admin to view one patient page
+    '''
+
+    mycursor.execute("SELECT name,medicalHistory,email,image,phone,gender,bdate,address,ssn,illness,Relatives_phone_Number,username,password FROM operationsDB.Patient WHERE ssn="+ patient_id)
+    row_headers=[x[0] for x in mycursor.description] #this will extract row headers
+    myresult = mycursor.fetchall()
+    
+    # tesst = b64encode(myresult[0][3])
+    myresult = [(r[0],r[1],r[2],b64encode(r[3]).decode("utf-8"),r[4],r[5],r[6],r[7],r[8],r[9],r[10],r[11],r[12]) for r in myresult]
+
+    return render_template("adminUpdatePatient.html",data=myresult)
 #Nurses
 @adminBp.route('/nurses')
 def viewNurses():
@@ -336,11 +372,13 @@ def viewRooms():
     search = request.args.get('search')
     type = request.args.get('type')
     if type == 'location':
+
         mycursor.execute("SELECT * FROM operationsDB.`Operation Room` WHERE `Operation Room`.Room_Location  LIKE '%"+search+"%'")
     elif type == 'id':
         mycursor.execute("SELECT * FROM operationsDB.`Operation Room` WHERE `Operation Room`.Operation_Room_ID LIKE '%"+search+"%'")
     
     
+
     else :
         mycursor.execute("SELECT * FROM operationsDB.`Operation Room`;")
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers

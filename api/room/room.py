@@ -29,11 +29,20 @@ def addRoom():
     return render_template("adminAddRooms.html")
 
 
-@roomBp.route('/update' ,methods=['POST'])
-def updateRoom():
+@roomBp.route('/update/<id>' ,methods=['POST','GET'])
+def updateRoom(id):
     #TODO
-    #     
-    return("TestRoom")
+    # 
+    if request.method == 'POST':
+        Room_Location = request.form['Room_Location']
+        sql = "UPDATE `operationsDB`.`Operation Room` SET Room_Location=%s WHERE Operation_Room_ID="+id
+        
+        val = (Room_Location)
+        mycursor.execute(sql,val)
+        mydb.commit()
+    return redirect(url_for('adminBp.viewRooms'))
+    
+    
 
 @roomBp.route('/delete/<Operation_Room_ID>' ,methods=['GET'])
 def deleteRoom(Operation_Room_ID):
