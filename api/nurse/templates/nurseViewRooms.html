@@ -2,9 +2,16 @@
 {% block head %}
     <h3>View Rooms</h3>
     <div class="row">
-      <h5 class="align-self-center col" >Total of {{data.rec|count}} rooms</h5>    
+      <h5 class="align-self-center col" >Total of {{data.rec|count}} rooms</h5> 
+      <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Search</button>
+        <select class="form-select col m-3" name="type" aria-label="Default select example">
+          <option selected value="id" name="type">Search by ID</option>
+          <option value="location" name="type">Search by Location</option>
+        </select>
+      </form>     
     </div>
-
     <table class="table">
       <thead>
         <tr>

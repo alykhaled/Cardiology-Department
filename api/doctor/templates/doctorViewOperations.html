@@ -1,12 +1,27 @@
 {% extends "doctorIndex.html" %}
 {% block head %}
     <h3>View Operations</h3>
-    <div class="row">
-      <h5 class="align-self-center col" >Total of {{data.rec|count}} operations</h5>
+    <nav class="navbar navbar-light">
+      <h5 class="align-self-center col p-0" >Total of {{data.rec|count}} operations</h5>
+      <form class="form-inline">
+        <input class="form-control mr-sm-2" type="search" name="search" placeholder="Search" aria-label="Search">
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        <select class="form-select col m-3" name="type" aria-label="Default select example">
+          <option selected value="id" name="type">Search by ID</option>
+          <option value="name" name="type">Search by Name</option>
+          <option value="patient" name="type">Search by Patient Name</option>
+          <option value="doctor" name="type">Search by Doctor Name</option>
+          <option value="date" name="type">Search by Date</option>
+        </select>
+        <div class="form-group">
+          <input type="date" class="form-control" id="bdate" name="date" >
+        </div>
+      </form>
       <div class="text-right p-4 col">
         <a href="http://127.0.0.1:5000/doctor/operations/add" class="btn btn-primary align-self-center">Add Operation</a>
-      </div>      
-    </div>
+      </div>  
+    </nav>
+   
 
     <table class="table">
       <thead>

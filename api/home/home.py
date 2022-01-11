@@ -43,7 +43,7 @@ def login():
         myresult = mycursor.fetchall()
         for nurseCredentials in myresult:
             if un == nurseCredentials[0] and pw == nurseCredentials[1] :
-                session["id"] = patientCredentials[2] 
+                session["id"] = nurseCredentials[2] 
                 session["accountType"] = "nurse"
                 session.modified = True
                 return redirect(url_for('nurseBp.nurseIndex'))

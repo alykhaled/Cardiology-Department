@@ -71,7 +71,18 @@ def viewPatients():
     to view patients in a table
     '''
 
-    mycursor.execute("SELECT ssn as SSN,name as Name ,phone as 'Phone Number',illness as Illness,2022-YEAR(bdate) as AGE FROM operationsDB.Patient")
+    search = request.args.get('search')
+    type = request.args.get('type')
+    if type == 'name':
+        mycursor.execute("SELECT ssn as SSN,name as Name ,phone as 'Phone Number',illness as Illness,2022-YEAR(bdate) as AGE FROM operationsDB.Patient WHERE Patient.name  LIKE '%"+search+"%'")
+    elif type == 'ssn':
+        mycursor.execute("SELECT ssn as SSN,name as Name ,phone as 'Phone Number',illness as Illness,2022-YEAR(bdate) as AGE FROM operationsDB.Patient WHERE Patient.ssn LIKE '%"+search+"%'")
+    elif type == 'age':
+        mycursor.execute("SELECT ssn as SSN,name as Name ,phone as 'Phone Number',illness as Illness,2022-YEAR(bdate) as AGE FROM operationsDB.Patient WHERE Patient.bdate LIKE '%"+search+"%'")
+    
+    else :
+        mycursor.execute("SELECT ssn as SSN,name as Name ,phone as 'Phone Number',illness as Illness,2022-YEAR(bdate) as AGE FROM operationsDB.Patient")
+    
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
@@ -88,7 +99,15 @@ def viewRooms():
     to view rooms in a table
     '''
 
-    mycursor.execute("SELECT * FROM operationsDB.`Operation Room`;")
+    search = request.args.get('search')
+    type = request.args.get('type')
+    if type == 'location':
+        mycursor.execute("SELECT * FROM operationsDB.`Operation Room` WHERE Room_Location LIKE '%"+search+"%'")
+    elif type == 'id':
+        mycursor.execute("SELECT * FROM operationsDB.`Operation Room` WHERE Operation_Room_ID LIKE '%"+search+"%'")
+    else :
+        mycursor.execute("SELECT * FROM operationsDB.`Operation Room`;")
+    
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()
     data = {
