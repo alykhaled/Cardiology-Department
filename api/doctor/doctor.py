@@ -36,6 +36,8 @@ def doctorIndex():
     operations and patients that are
     waiting for a doctor
     '''
+    if not session.get("id"):
+        return redirect(url_for('homeBp.login'))
     mycursor.execute("SELECT name,email,username FROM Doctor WHERE ssn = "+str(session.get("id")))
     result = mycursor.fetchall()[0]
     name = result[0]
@@ -44,10 +46,17 @@ def doctorIndex():
     session['name'] = name
     session['email'] = email
     session['username'] = username
+    session['accountType'] = "doctor"
     creds = None
 
-    if os.path.exists('token.json'):
-        creds = Credentials.from_authorized_user_file('token.json', SCOPES)
+    if session.get("token"):
+        creds = Credentials(token=session.get("token"),
+            refresh_token=session.get("refresh_token"),
+            token_uri="https://oauth2.googleapis.com/token", 
+            client_id=session.get("client_id"),
+            client_secret=session.get("client_secret"),
+            scopes=SCOPES)
+
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
@@ -124,7 +133,9 @@ def viewPatients():
     elif type == 'ssn':
         mycursor.execute("SELECT ssn as SSN,name as Name ,phone as 'Phone Number',illness as Illness,2022-YEAR(bdate) as AGE FROM operationsDB.Patient WHERE Patient.ssn LIKE '%"+search+"%'")
     elif type == 'age':
-        mycursor.execute("SELECT ssn as SSN,name as Name ,phone as 'Phone Number',illness as Illness,2022-YEAR(bdate) as AGE FROM operationsDB.Patient WHERE Patient.bdate LIKE '%"+search+"%'")
+        mycursor.execute("SELECT ssn as SSN,name as Name ,phone as 'Phone Number',illness as Illness,2022-YEAR(bdate) as AGE FROM operationsDB.Patient WHERE 2022-YEAR(bdate) LIKE '%"+search+"%'")
+    else:
+        mycursor.execute("SELECT ssn as SSN,name as Name ,phone as 'Phone Number',illness as Illness,2022-YEAR(bdate) as AGE FROM operationsDB.Patient")
     
     row_headers=[x[0] for x in mycursor.description] #this will extract row headers
     myresult = mycursor.fetchall()

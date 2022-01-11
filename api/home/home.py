@@ -59,6 +59,22 @@ def login():
     else:
         return render_template('home.html', form=form)
 
+@homeBp.route('/logout', methods=["GET", "POST"])
+def logout():
+    if session.get("accountType") == "doctor":
+        session.pop("name")
+        session.pop("username")
+        session.pop("email")
+        session.pop("token")
+        session.pop("refresh_token")    
+    else:
+        session.pop("name")
+        session.pop("username")
+        session.pop("email")
+    return redirect(url_for('homeBp.login'))
+
+
+
 @homeBp.route('/Contactus',methods=["GET", "POST"])
 def contactus():
     form=ContactForm()

@@ -86,8 +86,10 @@ def addOperation():
                     print ('Event created: %s' % (event.get('htmlLink')))
                 except HttpError as error:
                     print ('An error occurred: %s' % error)
-                
-    return redirect(url_for('adminBp.viewOperations'))
+            return redirect(url_for('doctorBp.viewOperations'))
+        else:
+            return redirect(url_for('adminBp.viewOperations'))
+
 
 
 @operationBp.route('/update/<id>' ,methods=['POST'])
